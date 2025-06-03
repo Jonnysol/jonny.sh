@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Jonathan Solomon]]></title>
+        <description><![CDATA[Jonathan Solomon]]></description>
+        <link>https://jonny.sh/blog</link>
+        <image>
+            <url>https://jonny.sh/assets/favicon.png</url>
+            <title>Jonathan Solomon</title>
+            <link>https://jonny.sh/blog</link>
+        </image>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Tue, 03 Jun 2025 02:21:15 GMT</lastBuildDate>
+        <atom:link href="https://jonny.sh/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Everything is Optimized, Everything is Same]]></title>
+            <description><![CDATA[Everything is optimized, standardized, uniform, predictable, same. Where goes our creative expression?]]></description>
+            <link>https://jonny.sh/blog/same</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/same</guid>
+            <pubDate>Sun, 07 Jan 2024 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Qualifying for EB1 Green Card as a Software Engineer]]></title>
+            <description><![CDATA[I recently got my US green card via an EB1-A (Alien of Extraordinary Ability) petition and many people have been asking me about this I thought I'd share my journey and my learnings.]]></description>
+            <link>https://jonny.sh/blog/eb1</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/eb1</guid>
+            <pubDate>Fri, 25 Mar 2022 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Using GitHub Issues for Blog Comments]]></title>
+            <description><![CDATA[I wanted to add a comment system to this blog but I didn't want to make visitors suffer with something like Disqus which are tracking-heavy. So I decided to use GitHub issues.]]></description>
+            <link>https://jonny.sh/blog/issues</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/issues</guid>
+            <pubDate>Sun, 13 Mar 2022 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[VEON Pakistan’s Launch and What Startups Can Learn From It]]></title>
+            <description><![CDATA[Mobilink partnered with VEON; an Amsterdam-based company, to launch their equivalent of WeChat for Pakistanis. It was interesting to see an…]]></description>
+            <link>https://jonny.sh/blog/veon</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/veon</guid>
+            <pubDate>Mon, 16 Oct 2017 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Trying out Facebook’s Caffe2]]></title>
+            <description><![CDATA[I was amazed by Facebook’s Realtime Style Transfer camera. Which were first seen in the popular Prisma app but that wasn’t realtime and…]]></description>
+            <link>https://jonny.sh/blog/caffe2</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/caffe2</guid>
+            <pubDate>Sun, 09 Jul 2017 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Startup Funding in Pakistan (Infographic)]]></title>
+            <description><![CDATA[StartupList.pk now has a good amount of funded startups. So here is a little birds-eye view of how we are doing in terms of getting funded…]]></description>
+            <link>https://jonny.sh/blog/startup-funding-pakistan</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/startup-funding-pakistan</guid>
+            <pubDate>Tue, 31 Jan 2017 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Making Azure Work]]></title>
+            <description><![CDATA[If you know anything about cloud, you will know that nothing beats AWS. Any knowledgeable engineer will always choose AWS over Azure or…]]></description>
+            <link>https://jonny.sh/blog/azure</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/azure</guid>
+            <pubDate>Mon, 07 Nov 2016 07:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Shortest Way to Deep Learning]]></title>
+            <description><![CDATA[Google has brought deep learning a bit more mainstream. They also launched a short Udacity course, but it requires previous knowledge of…]]></description>
+            <link>https://jonny.sh/blog/deep-learning</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/deep-learning</guid>
+            <pubDate>Fri, 07 Oct 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Summer of Code]]></title>
+            <description><![CDATA[Summer of Code is a summer program to help Pakistani developers learn trending frameworks so they can write cool projects they want to…]]></description>
+            <link>https://jonny.sh/blog/summer-code</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/summer-code</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Zong 4G Hacked?]]></title>
+            <description><![CDATA[TL;DR: Zong’s servers are compromised and are randomly serving ads to it’s internet customers. Read on!]]></description>
+            <link>https://jonny.sh/blog/zong</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/zong</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Gamers’ Void]]></title>
+            <description><![CDATA[Remember the time when your grades were bad because everyday after school you would be gaming online with your friends. Friends you had…]]></description>
+            <link>https://jonny.sh/blog/gamers-void</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/gamers-void</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Privileges]]></title>
+            <description><![CDATA[Sometimes you meet a person who appears to be less successful than you, even though they are the same age as you. Which results in you…]]></description>
+            <link>https://jonny.sh/blog/privileges</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/privileges</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Arm Tracking using Pebble]]></title>
+            <description><![CDATA[I, as most other owners love my Pebble watch. It is incredible how a simple hardware device (uC + Display + BT + Sensors) strapped to your…]]></description>
+            <link>https://jonny.sh/blog/arm-tracking</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/arm-tracking</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[My Observations about Silicon Valley]]></title>
+            <description><![CDATA[So I had the chance to visit The Valley this month. These are my observations about the place in both technical and general sense as a…]]></description>
+            <link>https://jonny.sh/blog/silicon-valley</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/silicon-valley</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[High Performance Mobile Game Development in HTML5]]></title>
+            <description><![CDATA[Sometime ago, I had to make a decision on development language / framework for a cross platform mobile game. I had to at the very least…]]></description>
+            <link>https://jonny.sh/blog/perf-game-dev</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/perf-game-dev</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Scrollbars: Evolution Gone Wrong]]></title>
+            <description><![CDATA[I am a smartphone user and these new touchscreen devices have changed a lot of UI Elements and brought new concepts through this ‘gestures’…]]></description>
+            <link>https://jonny.sh/blog/scrollbars</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/scrollbars</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[How To Be Excellent at Something]]></title>
+            <description><![CDATA[So you consider yourself useless and worth nothing OR you have nothing unique that differs you from others. You might want to re-evaluate…]]></description>
+            <link>https://jonny.sh/blog/excellent</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/excellent</guid>
+            <pubDate>Fri, 09 Sep 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Growing Startup Landscape of Pakistan]]></title>
+            <description><![CDATA[StartupList.pk now has the data of about 200+ Pakistani companies.]]></description>
+            <link>https://jonny.sh/blog/startup-landscape-pakistan</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/startup-landscape-pakistan</guid>
+            <pubDate>Tue, 30 Aug 2016 06:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Are There Enough Tech Founders in Pakistan?]]></title>
+            <description><![CDATA[TL;DR: Apparently, yes. Read on!]]></description>
+            <link>https://jonny.sh/blog/tech-founders-pakistan</link>
+            <guid isPermaLink="true">https://jonny.sh/blog/tech-founders-pakistan</guid>
+            <pubDate>Thu, 26 May 2016 06:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
