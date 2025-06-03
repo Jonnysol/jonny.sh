@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jonny.sh
+
+# Sitemaps
+Sitemap: https://jonny.sh/sitemap.xml

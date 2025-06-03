@@ -1,0 +1,71 @@
+{
+  "polyfillFiles": [
+    "static/chunks/polyfills-c67a75d1b6f99dc8.js"
+  ],
+  "devFiles": [],
+  "ampDevFiles": [],
+  "lowPriorityFiles": [
+    "static/MyP6b80XM85dDfv4JmiWD/_buildManifest.js",
+    "static/MyP6b80XM85dDfv4JmiWD/_ssgManifest.js"
+  ],
+  "rootMainFiles": [],
+  "pages": {
+    "/": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/pages/index-027c6efefddb4117.js"
+    ],
+    "/_app": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/css/4156c80be1bfdc4d.css",
+      "static/chunks/pages/_app-c4c20f08bb47172d.js"
+    ],
+    "/_error": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/pages/_error-3c9a37b9888d2d4e.js"
+    ],
+    "/blog": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/75fc9c18-8a887c49b3994da9.js",
+      "static/chunks/996-27caaf7ed3b15273.js",
+      "static/chunks/pages/blog-fe67f04f1e885fca.js"
+    ],
+    "/blog/[slug]": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/75fc9c18-8a887c49b3994da9.js",
+      "static/chunks/996-27caaf7ed3b15273.js",
+      "static/chunks/293-43755b3579a16630.js",
+      "static/chunks/pages/blog/[slug]-b1ecad4f214d3b0c.js"
+    ],
+    "/projects": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/996-27caaf7ed3b15273.js",
+      "static/chunks/pages/projects-64e03e27c20e8e6d.js"
+    ],
+    "/projects/screenshothero": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/pages/projects/screenshothero-54b9066473eee9c2.js"
+    ],
+    "/talks": [
+      "static/chunks/webpack-8186599fe6e1660d.js",
+      "static/chunks/framework-5f4595e5518b5600.js",
+      "static/chunks/main-a2cf71215c9e1dc5.js",
+      "static/chunks/996-27caaf7ed3b15273.js",
+      "static/chunks/pages/talks-d1b97f6f6ade0db7.js"
+    ]
+  },
+  "ampFirstPages": []
+}
