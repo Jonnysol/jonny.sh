@@ -2,11 +2,11 @@
 
 # Site Settings
 site:
-  title: "Jon's Blog"
-  description: "Personal blog and portfolio"
-  author: "Jon"
-  email: "contact@example.com"
-  url: "https://jon.github.io"
+  title: "Jonathan Solomon - Infrastructure Engineer & Innovator"
+  description: "Infrastructure Engineer at Apple Vision Products Group, Founder of DC Electric Skateboarding, and SkillsUSA National Gold Medalist"
+  author: "Jonathan Solomon"
+  email: "jonathan@gojsg.com"
+  url: "https://jonny.sh"
 
 # Theme Settings
 theme:
@@ -37,9 +37,9 @@ features:
 
 # Social Links
 social:
-  github: "https://github.com/jon"
-  twitter: "https://twitter.com/jon"
-  linkedin: "https://linkedin.com/in/jon"
+  github: "https://github.com/Jonnysol"
+  twitter: "https://twitter.com/TheJonSowl"
+  linkedin: "https://linkedin.com/in/Jonsol"
 
 # SEO Settings
 seo:
@@ -47,4 +47,4 @@ seo:
   openGraph:
     type: "website"
     locale: "en_US"
-    siteName: "Jon's Blog"
+    siteName: "Jonathan Solomon - Infrastructure Engineer & Innovator"
