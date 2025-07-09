@@ -23,7 +23,7 @@ export default function Home() {
         {/* eslint-disable-next-line react/no-unescaped-entities */}
         Hi, I'm Jonathan! 
       </h1>
-      <h2>Turning wild ideas into reality, one robot at a time! 🤖⚡</h2>
+      <h2>I build infrastructure and IoT</h2>
       <h3 style={{ marginTop: "0.5rem" }}>You may know me from:</h3>
       <ul id="homepage-projects">
         <li>Infrastructure Engineer at <a href="https://apple.com/" target="_blank" className="project-link"><img src="/assets/img/icons/apple.png" />Apple Vision Products Group</a>.
