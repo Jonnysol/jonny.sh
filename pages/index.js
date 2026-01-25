@@ -1,71 +1,397 @@
-import HeadComponent from "../components/head"; // Renamed to avoid conflict
+import HeadComponent from "../components/head";
 import dynamic from 'next/dynamic';
+import NavBar from '../components/NavBar';
+import { motion } from 'framer-motion';
 
-// Dynamically import PhotoBelt with SSR turned off
 const PhotoBelt = dynamic(() => import("../components/PhotoBelt"), {
-  ssr: false,
-  // loading: () => <p>Loading photo belt...</p> // Optional loading state
+    ssr: false,
+    loading: () => <div style={{ height: 150 }}></div>
 });
 
+const career = [
+    {
+        company: "Apple",
+        role: "Vision Hardware Lab Engineer",
+        period: "2024 - Present",
+        desc: "Designing holistic test infrastructure for Apple Vision Pro. Sole DRI for labs in Cupertino & Boulder. Building robotic fixtures for system-level validation.",
+        logo: "/assets/img/icons/apple.png"
+    },
+    {
+        company: "ContextVision",
+        role: "Founder & Builder",
+        period: "2024 - Present",
+        desc: "Building next-generation context awareness tools.",
+        logo: "/assets/img/icons/playroom.png"
+    },
+    {
+        company: "Verizon",
+        role: "IT Field Technician",
+        period: "2018 - 2023",
+        desc: "Implemented IoT systems across DC. Integrated computer vision for defect detection (98% rate).",
+        logo: "/assets/img/icons/verizon.png"
+    }
+];
+
+const projects = [
+    {
+        title: "JailTime.io",
+        role: "Creator",
+        icon: "/assets/img/icons/codecaptcha.png",
+        link: "https://www.codecaptcha.io",
+        desc: "Secure MCP authentication system.",
+        tag: "Security"
+    },
+    {
+        title: "IoT-Zero",
+        role: "Open Source",
+        icon: "/assets/img/icons/zero.png",
+        link: "https://github.com/jonnysh/iot-zero/",
+        desc: "Lightweight IoT framework for embedded systems.",
+        tag: "Framework"
+    },
+    {
+        title: "SmartSensor",
+        role: "Creator",
+        icon: "/assets/img/icons/screenshothero.png",
+        link: "/projects/screenshothero/",
+        desc: "IoT aggregation platform.",
+        tag: "IoT"
+    },
+    {
+        title: "DCESK8",
+        role: "Co-founder",
+        icon: "/assets/img/icons/dcesk8.png",
+        link: "https://dcesk8.com",
+        desc: "E-mobility advocacy & tools.",
+        tag: "Community"
+    },
+    {
+        title: "RecordScreen.io",
+        role: "Creator",
+        icon: "/assets/img/icons/recordscreen.png",
+        link: "https://recordscreen.io/",
+        desc: "Browser-based screen recorder.",
+        tag: "Web Tool"
+    },
+    {
+        title: "Coco Music",
+        role: "App Dev",
+        icon: "/assets/img/icons/coco.png",
+        link: "https://apps.apple.com/us/app/coco-music/id1401506547/",
+        desc: "Streamlined music client.",
+        tag: "Mobile"
+    }
+];
 
 export default function Home() {
-  return (
-    <>
-    <HeadComponent 
-      title="Home"
-    />
+    return (
+        <div className="main-wrapper">
+            <HeadComponent title="Jonathan Solomon - Engineer & Maker" />
+            <NavBar />
 
-    <div className="page-content-section">
-      <div className="profile-picture">
-        <img src="/photo.jpg" alt="Jonathan Solomon" className="circle-image" loading="eager" />
-      </div>
-      <h1>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
-        Hi, I'm Jonathan! 
-      </h1>
-      <h2>I build cool things with cool people. 🛠️</h2>
-      <h3 style={{ marginTop: "0.5rem" }}>You may know me from:</h3>
-      <ul id="homepage-projects">
-      <li>Building <a href="https://jonny.sh/" target="_blank" className="project-link"><img src="/assets/img/icons/playroom.png" />ContextVision</a>.</li>
-        <li>Lab Systems Engineer at <a href="https://apple.com/" target="_blank" className="project-link"><img src="/assets/img/icons/apple.png" />Apple</a>.</li>
-        <li>Ex Field Engineer at <a href="https://www.verizon.com" target="_blank" className="project-link"><img src="/assets/img/icons/verizon.png" />Verizon</a>.</li>
-        <li>Ex Co-founder at
-          <a href="https://dcesk8.com" target="_blank" className="project-link"><img src="/assets/img/icons/dcesk8.png" />DCESK8 Inc.</a>.
-          <br />Building tools and technology to support e-mobility future.
-          <br />Advocating for sustainable transportation solutions.
-        </li>
-        <li>Weekly newsletter <a href="http://jonny.substack.com/" target="_blank" className="project-link">Dev Digest</a>.</li>
-      </ul>
-    </div>
-    <PhotoBelt />
-    <div className="page-content-section">
-      <ul id="homepage-projects"> 
-        <li>Creator of
-          <ul>
-          <li><a href="https://www.codecaptcha.io" target="_blank" className="project-link"><img src="/assets/img/icons/codecaptcha.png" />JailTime.io</a> – MCP authentication.
-              <a title="Hacker News Discussion" target="_blank" href="https://news.ycombinator.com/item?id=29993948" className="badge hn"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z" /></svg> <span>162</span></a>
-            </li>
-            <li><a href="/projects/screenshothero/" className="project-link"><img src="/assets/img/icons/screenshothero.png" />SmartSensor Hub</a> – IoT sensor integration platform.
-              <a title="Hacker News Discussion" target="_blank" href="https://news.ycombinator.com/item?id=22065333" className="badge hn"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z" /></svg> <span>429</span></a>
-            </li>
-            <li><a href="https://github.com/jonnysh/iot-zero/" target="_blank" className="project-link"><img src="/assets/img/icons/zero.png" />IoT-Zero</a> – Lightweight IoT framework for embedded systems.
-              <a title="Hacker News Discussion" target="_blank" href="https://news.ycombinator.com/item?id=19254828" className="badge hn"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z" /></svg> <span>513</span></a>
-            </li>
-            <li><a href="https://apps.apple.com/us/app/coco-music/id1401506547/" target="_blank" className="project-link"><img src="/assets/img/icons/coco.png" />Coco Music</a> – A fast music streaming client for iOS and Android, specially optimized and co-located for South Asian users.</li>
-            <li><a href="https://apps.apple.com/us/app/double-recorder/id1480805574" target="_blank" className="project-link"><img src="/assets/img/icons/doublerecorder.png" />Double Recorder</a> – iOS video recorder to record from both cameras (front and back) simultaneously.</li>
-            <li><a href="https://www.allmydesktops.com/" target="_blank" className="project-link"><img src="/assets/img/icons/allmydesktops.png" />AllMyDesktops.com</a> – Fastest browser-based client for RDP and VNC. Zero installations.
-              <a title="Hacker News Discussion" target="_blank" href="https://news.ycombinator.com/item?id=16358774" className="badge hn"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Y Combinator icon</title><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z" /></svg> <span>65</span></a>
-            </li>
-            <li><a href="https://github.com/asadm/urduscript/" target="_blank" className="project-link"><img src="/assets/img/icons/urduscript.png" />AmharicScript/AI</a> – JavaScript dialect in Urdish, with a goal to make programming more accessible for beginners from South Asia.</li>
-            <li><a href="https://recordscreen.io/" target="_blank" className="project-link"><img src="/assets/img/icons/recordscreen.png" />RecordScreen.io</a> – Screen recorder right in the browser. No installation required.
-              <a title="Featured on Product Hunt" href="https://www.producthunt.com/posts/recordscreen-io" className="badge ph"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Product Hunt icon</title><path d="M13.604 8.4h-3.405V12h3.405c.995 0 1.801-.806 1.801-1.801 0-.993-.805-1.799-1.801-1.799zM12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm1.604 14.4h-3.405V18H7.801V6h5.804c2.319 0 4.2 1.88 4.2 4.199 0 2.321-1.881 4.201-4.201 4.201z" /></svg> <span>897</span></a>
-            </li>
-            <li><a href="https://www.startuplist.pk/" target="_blank" className="project-link"><img src="/assets/img/icons/startuplist.png" />Startuplist.pk</a> – Pakistani startup database.</li>
-            <li><a className="project-link" href="/projects">See all projects</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    </>
-  )
+            <main>
+                {/* --- HERO: TIGHT & CENTERED --- */}
+                <section className="hero-section container">
+                    <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="center-content"
+                    >
+                        <div className="hero-avatar-wrapper">
+                            <img src="/photo.jpg" alt="Jonathan" className="profile-img" />
+                            <div className="availability-badge">
+                                <span className="dot"></span> Available
+                            </div>
+                        </div>
+
+                        <h1 className="hero-title">
+                            Hi, I&apos;m <span className="highlight-hover">Jonathan</span>.
+                        </h1>
+
+                        <p className="hero-bio">
+                            Engineer & Digital Alchemist.<br />
+                            Building hardware at <span className="bold">Apple</span> and software at <span className="bold">ContextVision</span>.
+                        </p>
+
+                        <div className="hero-cta">
+                            <a href="#projects" className="btn-primary">View Work</a>
+                            <a href="https://github.com/jonnysh" className="btn-text">GitHub ↗</a>
+                        </div>
+                    </motion.div>
+                </section>
+
+                {/* --- PHOTO BELT (Dynamic/Artistic) --- */}
+                <div className="belt-wrapper-artistic">
+                    <PhotoBelt />
+                    {/* Tape accents to satisfy "Artistic Character" */}
+                    <div className="tape-accent tape-left"></div>
+                    <div className="tape-accent tape-right"></div>
+                </div>
+
+                {/* --- CAREER STORY --- */}
+                <section id="career" className="section container">
+                    <div className="section-label">Experience</div>
+                    <div className="career-list">
+                        {career.map((job, i) => (
+                            <motion.div
+                                key={i}
+                                className="career-item"
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ delay: i * 0.1 }}
+                            >
+                                <div className="career-logo">
+                                    <img src={job.logo} alt={job.company} />
+                                </div>
+                                <div className="career-details">
+                                    <div className="career-header">
+                                        <h3 className="career-role">{job.role}</h3>
+                                        <span className="career-period">{job.period}</span>
+                                    </div>
+                                    <div className="career-company">{job.company}</div>
+                                    <p className="career-desc">{job.desc}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* --- PROJECTS GRID --- */}
+                <section id="projects" className="section container">
+                    <div className="section-label">Selected Works</div>
+                    <div className="project-grid">
+                        {projects.map((p, i) => (
+                            <motion.a
+                                href={p.link}
+                                target="_blank"
+                                key={i}
+                                className="card-editorial"
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.05 }}
+                            >
+                                <div className="card-content">
+                                    <div className="card-top">
+                                        <img src={p.icon} alt={p.title} className="p-icon" />
+                                        <span className="sticker-badge">{p.tag}</span>
+                                    </div>
+                                    <h3 className="p-title">{p.title}</h3>
+                                    <p className="p-desc">{p.desc}</p>
+                                </div>
+                            </motion.a>
+                        ))}
+                    </div>
+                </section>
+
+            </main>
+
+            <footer className="footer container">
+                <p>© {new Date().getFullYear()} Jonathan Solomon.</p>
+            </footer>
+
+            <style jsx>{`
+        .main-wrapper {
+          padding-top: 80px;
+        }
+
+        /* HERO */
+        .hero-section {
+          text-align: center;
+          padding: 60px 20px 50px;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .center-content {
+          max-width: 600px;
+        }
+
+        .hero-avatar-wrapper {
+          position: relative;
+          width: 88px;
+          height: 88px;
+          margin: 0 auto 24px;
+        }
+
+        .profile-img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #000;
+          box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+        }
+
+        .availability-badge {
+          position: absolute;
+          bottom: -8px;
+          right: -15px;
+          background: #fff;
+          border: 1px solid #eee;
+          padding: 4px 8px;
+          border-radius: 20px;
+          font-size: 11px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .dot {
+          width: 6px;
+          height: 6px;
+          background: var(--color-acid);
+          border-radius: 50%;
+        }
+
+        .hero-title {
+          font-size: 48px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          line-height: 1.1;
+        }
+
+        .hero-bio {
+          font-size: 19px;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 32px;
+        }
+        
+        .bold { font-weight: 600; color: #000; }
+        
+        .hero-cta {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+        }
+        
+        .btn-primary {
+          background: #000;
+          color: #fff;
+          padding: 10px 24px;
+          border-radius: 30px;
+          font-weight: 600;
+          font-size: 14px;
+          transition: transform 0.2s;
+        }
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          background: var(--color-electric);
+        }
+        
+        .btn-text {
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: underline;
+        }
+
+        /* ARTISTIC BELT */
+        .belt-wrapper-artistic {
+          position: relative;
+          margin: 50px 0;
+          transform: rotate(-1.5deg) scale(1.02);
+          background: var(--bg-paper);
+          border-top: 2px solid #000;
+          border-bottom: 2px solid #000;
+          padding: 12px 0;
+          z-index: 5;
+        }
+        
+        .tape-accent {
+          position: absolute;
+          width: 80px;
+          height: 20px;
+          background: rgba(255, 255, 0, 0.3); /* Highlighter yellow tape */
+          z-index: 10;
+        }
+        .tape-left { top: -10px; left: 10%; transform: rotate(5deg); }
+        .tape-right { bottom: -10px; right: 10%; transform: rotate(-3deg); }
+
+        /* SECTIONS */
+        .section {
+          padding: 70px 20px;
+          max-width: 840px;
+        }
+        
+        .section-label {
+          font-family: 'Space Grotesk';
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          color: #888;
+          text-align: center;
+          margin-bottom: 40px;
+          position: relative;
+        }
+        .section-label::after {
+          content: "";
+          display: block;
+          width: 1px;
+          height: 20px;
+          background: #eee;
+          margin: 10px auto 0;
+        }
+
+        /* CAREER */
+        .career-list { display: flex; flex-direction: column; gap: 48px; }
+        .career-item { display: flex; gap: 24px; }
+        
+        .career-logo {
+          flex-shrink: 0;
+        }
+        .career-logo img {
+          width: 52px;
+          height: 52px;
+          border-radius: 10px;
+          border: 1px solid #f0f0f0;
+        }
+        
+        .career-details { flex: 1; }
+        
+        .career-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 4px;
+        }
+        
+        .career-role { font-size: 18px; font-weight: 600; }
+        .career-period { font-size: 13px; color: #999; font-family: 'Space Grotesk'; }
+        .career-company { font-size: 14px; font-weight: 500; margin-bottom: 10px; color: #444; }
+        .career-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* PROJECTS */
+        .project-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 24px;
+        }
+        
+        .p-icon { width: 44px; height: 44px; border-radius: 8px; border: 1px solid #f0f0f0; }
+        .card-top { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .p-title { font-size: 17px; margin-bottom: 8px; }
+        .p-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+        .footer {
+          padding: 80px 0;
+          text-align: center;
+          font-size: 12px;
+          color: #ccc;
+          border-top: 1px solid #f9f9f9;
+        }
+
+        @media (max-width: 600px) {
+           .career-item { flex-direction: column; text-align: center; align-items: center; }
+           .career-header { flex-direction: column; gap: 4px; }
+           .hero-title { font-size: 36px; }
+        }
+      `}</style>
+        </div>
+    )
 }

@@ -1,554 +1,194 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box; /* Ensures padding and border don't add to element's total width/height */
-  overflow-x: hidden; /* Globally prevent horizontal scroll / wiggle */
-}
-
-/* Apply border-box to all elements for consistency */
-*, *::before, *::after {
-  box-sizing: inherit; /* Inherit from html/body */
-}
-
-.page-content-section {
-  max-width: var(--content-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding: 40px 20px; /* Consistent with original #hero padding */
-  width: 100%;
-}
+/* --- "Refined Editorial" Design System --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=Permanent+Marker&display=swap');
 
 :root {
-	--profile-picture-size: 100px;
-	--content-width: 1000px;
+    /* --- Palette (Clean Base + Neon Accents) --- */
+    --bg-paper: #ffffff;
+    --bg-contrast: #0d0d0d;
+
+    --color-acid: #ccff00;
+    /* POP accent for badges/highlights */
+    --color-electric: #2b6eff;
+    /* Tech Blue */
+    --color-hot: #ff2a6d;
+    /* Energy Pink */
+    --color-highlighter: rgba(204, 255, 0, 0.5);
+    /* Marker yellow/green */
+
+    --text-primary: #050505;
+    --text-secondary: #5a5a5a;
+
+    /* --- Transforms & Borders --- */
+    --skew-angle: -1.5deg;
+    /* The "Zine" tilt */
+    --border-black: 2px solid #000;
+    --border-thin: 1px solid #e5e5e5;
+
+    --shadow-hard: 4px 4px 0px #000;
+    --shadow-hover: 6px 6px 0px var(--color-acid);
+
+    /* --- Dimensions --- */
+    --content-width: 1000px;
+    /* Tighter for better readability */
+    --nav-height: 64px;
 }
 
-body{
-	font-family: 'Source Sans Pro', sans-serif;
-	letter-spacing: -0.004em;
-	font-style: normal;
-	color: rgba(0, 0, 0, 0.84);
-	font-family: -apple-system, BlinkMacSystemFont, 'Source Sans Pro', "Helvetica Neue", sans-serif;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: subpixel-antialiased;
-	margin: 0;
-	padding: 0;
-	width: 100%;
+/* --- Reset & Base --- */
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-paper);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+/* --- Utilities --- */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.marker-text {
+    font-family: 'Permanent Marker', cursive;
+    color: var(--color-hot);
+    transform: rotate(-2deg);
+    display: inline-block;
+}
+
+/* Highlighter Effect for Links */
+.highlight-hover {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.highlight-hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    right: -4px;
+    height: 12px;
+    background: var(--color-highlighter);
+    z-index: -1;
+    transform: scaleX(0) skewX(-10deg);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 2px;
+}
+
+.highlight-hover:hover::before {
+    transform: scaleX(1) skewX(-10deg);
+}
+
+/* --- Components --- */
+
+/* EDITORIAL CARD: Minimal layout, bold interaction */
+.card-editorial {
+    position: relative;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 0;
+    /* Image flush */
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-editorial:hover {
+    transform: translateY(-6px) rotate(0.5deg);
+    box-shadow: var(--shadow-hard);
+    z-index: 10;
+    border-color: #000;
+}
+
+.card-content {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* "Sticker" Badge */
+.sticker-badge {
+    display: inline-flex;
+    padding: 4px 10px;
+    background: #000;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transform: rotate(-1deg);
+}
+
+/* Floating Resume Button - PILL STYLE (Small & unobtrusive) */
 .floating-resume-button {
-	position: fixed;
-	bottom: 20px;
-	left: 20px;
-	z-index: 1000;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Centered bottom dock feel */
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 6px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.floating-resume-button:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .floating-resume-button a {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	padding: 8px 16px;
-	background: white;
-	border-radius: 8px;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	transition: transform 0.2s ease;
-	color: #333;
-	text-decoration: none;
-	font-size: 14px;
-}
-
-.floating-resume-button a:hover {
-	transform: translateY(-2px);
-}
-
-.floating-resume-button .resume-text {
-	font-weight: normal;
-}
-
-.header-container {
-	max-width: var(--content-width);
-	margin: 0 auto;
-	padding: 0 15px;
-}
-
-.content-container {
-	max-width: var(--content-width);
-	margin: 0 auto;
-	padding: 0 15px;
-	box-sizing: border-box;
-}
-
-#hero {
-	margin: 0;
-	padding: 40px 20px;
-	width: 100%;
-	max-width: none;
-	/* overflow-x: hidden; Temporarily removed for diagnostics */
-}
-
-#hero h2 {
-	margin-bottom: 0.5rem;
-}
-
-#hero h3 {
-	margin-top: 0;
-	margin-bottom: 1rem;
-}
-
-#hero .profile-picture {
-	margin-bottom: 20px;
-	display: inline-block;
-}
-
-.circle-image {
-	width: var(--profile-picture-size);
-	height: var(--profile-picture-size);
-	border-radius: 50%;
-	object-fit: cover;
-	border: 2px solid #fff;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-li,p{
-	font-size: 18px;
-	line-height: 1.58;
-}
-
-h1{
-	font-weight: 300;
-	margin: 0px;
-}
-
-h2{
-	font-size: 40px;
-	line-height: 1.05;
-	font-weight: 500;
-	letter-spacing: 0.008em;
-	margin: 20px 0px;
-    /* font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif; */
-}
-
-h3{
-	font-size: 24px;
-	line-height: 1.20849;
-	font-weight: 500;
-	letter-spacing: 0.015em;
-}
-
-/* apply to <code> except if it's a child of a <pre> element */
-code:not(pre *){
-	background: #333;
-	color: #eee;
-	padding: 4px 9px;
-	border-radius: 3px;
-}
-
-ul h4{
-	margin: 0px;
-}
-
-ul p{
-	margin: 0px;
-}
-
-p{
-	margin-bottom: 20px;
-}
-
-.text-center{
-	text-align: center;
-}
-.footer{
-	border-top: 1px solid #ccc;
-	text-align: center;
-	padding: 10px;
-	color: #999;
-	margin-top: 30px;
-}
-.footer p{
-	font-size: 10px;
-}
-.footer a{
-	color: #999;
-}
-ul.menu{
-	list-style: none;
-	text-align: center;
-	padding: 0px;
-	margin-top: 10px;
-}
-ul.menu li{
-	display: inline-block;
-
-}
-ul.menu li a{
-	color: #000;
-	text-decoration: none;
-	font-size: 13px;
-	padding-right: 7px;
-}
-
-ul.menu li a:hover{
-	text-decoration: underline;
-}
-
-ul.menu  > li + li:before {
-    color: #000;
-    content: "// ";
-    padding: 0 8px;
-}
-
-@media (max-width: 768px){
-	#mainimage{
-		height: 300px;
-		background-position: center;
-	}
-}
-ul.projectlist{
-	list-style-type: square;
-	max-width: 600px;
-
-
-	margin-top: 50px;
-}
-ul.projectlist a{
-	color: #000;
-}
-ul.projectlist p{
-	font-weight: 300;
-}
-
-ul.projectlist h3{
-	font-weight: bold;
-	margin-bottom: 7px;
-}
-ul.projectlist li{
-	margin-bottom: 30px;
-}
-ul.projectlist li a:hover{
-	color: #777;
-}
-
-.content{
-	margin: 100px 0px;
-}
-
-#photos{
-	text-align: center;
-}
-
-#photos > div{
-	max-width: 600px;
-	display: block;
-	margin: 0 auto;
-	font-size: 14px;
-	line-height: 1.4;
-	color: rgba(0,0,0,.6);
-	letter-spacing: 0;
-	margin-bottom: 50px;
-	text-align: center;
-}
-#photos img{
-	display: block;
-	margin: 0 auto;
-	margin-bottom: 10px;
-	max-width: 600px;
-}
-img.grayscale {
-	-webkit-filter: grayscale(100%);
-	-moz-filter: grayscale(100%);
-	filter: grayscale(100%);
-}
-
-#quote{
-	margin: 0 auto;
-	text-align: center;
-}
-
-blockquote {
-
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  quotes: "\201C""\201D""\2018""\2019";
-}
-blockquote:before {
-  color: #ccc;
-  content: open-quote;
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
-}
-blockquote p {
-  display: inline;
-}
-
-.container{
-	max-width: 850px;
-	margin-right: auto;
-	padding-left: 15px;
-	padding-right: 15px;
-	margin-left: auto;
-}
-
-#logo{
-	/* display: inline-block; */
-	float: left;
-	font-size: 20px;
-	margin-top: 7px;
-	margin-right: 20px;
-}
-
-#logo a{
-	color: inherit;
-	text-decoration: none;
-}
-
-ul.menu{
-	text-align: right;
-}
-
-#hero{
-	margin-top: 15vh;
-}
-#hero h1{
-	font-size: 46px;
-}
-#hero h2{
-	font-weight: 300;
-	font-size: 30px;
-	line-height: 1.2;
-}
-
-.project-link{
-	padding: 2px 6px;
-	border-bottom: 2px solid #ececec;
-	text-decoration: none;
-	color: inherit;
-	font-weight: 500;
-}
-
-.project-link:hover{
-	border-bottom-color: #000;
-}
-
-.project-link img{
-	width: 18px;
-	margin-right: 6px;
-	/* filter: grayscale(1); */
-}
-
-.project-link:hover img{
-	filter: grayscale(0);
-}
-
-ul#homepage-projects{
-	list-style-type: square;
-}
-
-ul#homepage-projects li{
-	font-size: 15px;
-}
-
-ul#homepage-projects > li{
-	margin-top: 30px;
-	/* line-height: 1.98; */
-}
-ul#homepage-projects > li ul{
-	padding-left: 10px;
-}
-ul#homepage-projects > li ul li{
-	margin-top: 15px;
-}
-
-.badge{
-	display: inline-block;
-	text-decoration: none;
-	padding: 0 3px;
-	filter: saturate(0.8);
-}
-
-.badge:hover{
-	filter: saturate(1);
-}
-
-.badge svg{
-	width: 16px;
-}
-
-.badge span{
-	font-size: 12px;
-	font-weight: bold;
-	vertical-align: top;
-}
-
-.badge.hn{
-	color: rgb(240, 101, 47);
-	fill: rgb(240, 101, 47);
-}
-
-.badge.ph{
-	color: rgb(218, 85, 47);
-	fill: rgb(218, 85, 47);
-}
-
-.blog{
-	color: #000;
-}
-
-.blog h1{
-	color: #1a202c;
-	font-weight: 800;
-	font-size: 2.25em;
-	margin-top: 50px;
-	margin-bottom: 0.8888889em;
-	line-height: 1.1111111;
-}
-.blog h3{
-	font-size: 1.25em;
-	margin-top: 1.6em;
-	margin-bottom: 0.6em;
-	line-height: 1.6;
-	font-weight: 600;
-}
-
-.blog h4 {
-	font-size: 1.20em;
-	margin-top: 1.6em;
-	margin-bottom: 0.6em;
-	line-height: 1.6;
-	font-weight: 600;
-}
-
-.blog img {
-	max-width: 100%;
-	margin-top: 1.6em;
-	margin-bottom: 1.6em;
-}
-
-.blog .meta {
-	margin-bottom: 3rem;
-}
-
-.blog .meta .date{
-	--text-opacity: 1;
-    color: #718096;
-    color: rgba(113,128,150,var(--text-opacity));
-}
-
-.blog .meta .link-back{
-	float: right;
-}
-
-.blog .list-item{
-	margin: 40px 0px;
-	max-width: 540px;
-}
-
-.blog .list-item a {
-	color: unset;
-	text-decoration: none;
-}
-
-.blog .list-item .desc {
-	margin-bottom: 0.5em;
-	margin-top: 0;
-	font-size: 1rem;
-	line-height: 1.75;
-}
-.blog .list-item .date{
-	font-size: .875rem;
-	--text-opacity: 1;
-	color: #718096;
-	color: rgba(113,128,150,var(--text-opacity));
-
-}
-.blog .list-item .read-more-link {
-	margin-left: 0.25rem;
-	--text-opacity: 1;
-    color: #718096;
-    color: rgba(113,128,150,var(--text-opacity));
-		text-decoration: underline;
-}
-
-.blog .subscribe-text a{
-	--text-opacity: 1;
-	color: #718096;
-	color: rgba(113,128,150,var(--text-opacity));
-	text-decoration: underline;
-}
-
-/* Github Issues Widget */
-
-.github-issues{
-	/* border: 1px solid #ccc;
-	border-radius: 10px; */
-	margin-top: 50px;
-	padding-top: 20px;
-	border-top: 1px solid #ccc;
-}
-
-.github-issues .btn-add-comment{
-	background-color: #000;
-	border: 0.1rem solid #000;
-	border-radius: 0.4rem;
-	color: #fff;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 0.7rem;
-	font-weight: 700;
-	height: 2.8rem;
-	letter-spacing: .1rem;
-	line-height: 2.8rem;
-	padding: 0 2rem;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-	white-space: nowrap;
-}
-
-.github-issues .comment{
-	margin: 10px 20px;
-	padding: 30px 0px;
-	border-bottom: 1px solid #ccc;
-}
-
-.github-issues .comment-header{
-	font-size: 1.25em;
-	font-weight: 600;
-	margin-bottom: 0.5em;
-}
-
-.github-issues .comment-header-date{
-	font-size: 0.875rem;
-	--text-opacity: 1;
-		color: #718096;
-		color: rgba(113,128,150,var(--text-opacity));
-}
-
-.github-issues .comment-header-info{
-	display: inline-block;
-	vertical-align: top;
-	margin-left: 5px;
-}
-
-.github-issues .comment-header-info a{
-	color: inherit;
-	text-decoration: none;
-}
-
-.github-issues .comment-header img{
-	width: 40px;
-	border-radius: 50%;
-	margin-right: 5px;
-}
-
-.github-issues .comment-body-text {
-	font-size: 1rem;
-	line-height: 1.75;
-}
-
-.github-issues .comment-body-text img {
-	max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: #000;
+    color: #fff;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+}
+
+/* Legacy Support */
+.page-content-section {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 20px;
 }

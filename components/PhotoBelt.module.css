@@ -79,7 +79,8 @@
   
   /* --- Curvature (Border Radius) for the ITEM itself --- */
   /* This rounds the corners of the .beltItem container. */
-  border-radius: 8px; /* Adjust for more or less rounded corners on the item's frame. '0px' for sharp corners. '50%' for a circle (if item is square). */
+  border-radius: 6px; /* Slightly less than item's radius for a nice frame effect */
+  overflow: hidden; /* Crucial for parallax: hide parts of image that move outside */
   
   box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* Subtle shadow for depth. Adjust values or remove. */
   user-select: none; /* Prevents text selection if user accidentally drags over text content (not an issue with just images). */
@@ -96,11 +97,11 @@
 /* .beltItem img: The actual <img> tag inside each slide. */
 .beltItem img {
   display: block; /* Removes extra space below the image that inline elements sometimes have. */
-  
+
   /* --- Image Sizing within the Item --- */
   /* Make the image fill the entire .beltItem container. */
   /* Image takes 100% of the .beltItem's height (which is determined by width + aspect-ratio). */
-  --image-size: 95%;
+  --image-size: 95%; /* Original image size */
   width: var(--image-size);
   height: var(--image-size);
   /* --- Image Fitting & Cropping --- */

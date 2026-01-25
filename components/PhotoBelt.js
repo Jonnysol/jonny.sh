@@ -20,20 +20,22 @@ const images = [
 const PhotoBelt = () => {
   console.log('PhotoBelt (Fresh Embla): Component rendering.');
 
+  const autoplayPluginInstance = AutoScroll({
+    speed: 1,
+    playOnInit: true,
+    stopOnInteraction: false, // Autoplay will NOT stop on drag
+    stopOnMouseEnter: false,
+    // resumeDelay is not applicable if stopOnInteraction is false
+  });
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       dragFree: true, // For direct, non-snapping drag
       align: 'start', // Align slides to the start of the viewport
+      stopAutoplayOnInteraction: false, // Let the AutoScroll plugin manage interaction stops/resumes
     },
-    [
-      AutoScroll({
-        speed: 1,
-        playOnInit: false, // Auto-scroll is initially off
-        stopOnInteraction: false, // Auto-scroll resumes after user interaction
-        stopOnMouseEnter: true, // Pause auto-scroll on mouse hover
-      })
-    ]
+    [autoplayPluginInstance] // Pass the instance here
   );
 
   useEffect(() => {
