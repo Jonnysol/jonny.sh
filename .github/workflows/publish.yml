@@ -1,44 +1,49 @@
 name: Deploy to GitHub Pages
 on:
   push:
-    branches: [master]
-  workflow_dispatch:  # Add this line to enable manual triggers
+    branches: [ts-job-titles]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
-# Cancel any in-progress job or run
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
-      - name: Get files
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "18"
           cache: 'npm'
-      - name: Install packages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Install dependencies
         run: npm ci
-      - name: Build project
+      - name: Build with Next.js
         run: npm run build
-        env:
-          NEXT_TELEMETRY_DISABLED: 1
-      - name: Export static files
+      - name: Static HTML export with Next.js
         run: npm run export
-      - name: Add .nojekyll file
-        run: touch ./out/.nojekyll
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: out
-          branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
