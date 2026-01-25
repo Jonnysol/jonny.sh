@@ -53,16 +53,22 @@ body::before {
     /* Below Nav, above content */
 }
 
-/* NUKE SIDEBARS (Infrastructure Fix) */
+/* AGGRESSIVE SIDEBAR NUKE */
 .sidebar,
 #sidebar,
 .nav-side,
-.side-menu {
+.side-menu,
+[class*="sidebar"],
+[id*="sidebar"],
+aside,
+.vertical-nav {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    position: absolute !important;
+    visibility: hidden !important;
 }
 
 * {
@@ -101,7 +107,7 @@ h4 {
 /* Highlighter Effect */
 .highlight-hover {
     position: relative;
-    z-index: 1;
+    z-index: 5;
     font-weight: 550;
     transition: all 0.2s;
 }
@@ -126,6 +132,19 @@ h4 {
 }
 
 /* --- Components --- */
+
+/* Sketchbook Elements - Visibility Fix */
+.tape-strip {
+    z-index: 50 !important;
+    /* Force on top */
+    pointer-events: none;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.scribble-wrapper {
+    z-index: 1 !important;
+    opacity: 0.8;
+}
 
 .card-editorial {
     position: relative;
@@ -165,7 +184,8 @@ h4 {
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 99999;
+    /* Max Z-Index for visibility */
 }
 
 .floating-resume-button a {
@@ -180,6 +200,7 @@ h4 {
     font-size: 13px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .floating-resume-button a:hover {
