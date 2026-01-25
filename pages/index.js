@@ -1,6 +1,7 @@
 import HeadComponent from "../components/head";
 import dynamic from 'next/dynamic';
 import NavBar from '../components/NavBar';
+import ArtisticBackground from '../components/ArtisticBackground';
 import { motion } from 'framer-motion';
 
 const PhotoBelt = dynamic(() => import("../components/PhotoBelt"), {
@@ -101,6 +102,7 @@ export default function Home() {
   return (
     <div className="main-wrapper">
       <HeadComponent title="Jonathan Solomon - Engineer & Maker" />
+      <ArtisticBackground />
       <NavBar />
 
       <main>
@@ -144,29 +146,29 @@ export default function Home() {
           <Tape rotate={-3} bottom="-15px" left="15%" />
         </div>
 
-        {/* --- CAREER --- */}
+        {/* --- EXPERINCE (Refactored: Compact Timeline) --- */}
         <section id="career" className="section container">
-          <div className="section-label">Experience</div>
-          <div className="career-list">
+          <div className="section-label">Trajectory</div>
+          <div className="timeline-container">
+            <div className="timeline-line"></div>
             {career.map((job, i) => (
               <motion.div
                 key={i}
-                className="career-item"
+                className="timeline-row"
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <div className="career-logo">
+                <div className="t-logo">
                   <img src={job.logo} alt={job.company} />
                 </div>
-                <div className="career-details">
-                  <div className="career-header">
-                    <h3 className="career-role">{job.role}</h3>
-                    <span className="career-period">{job.period}</span>
+                <div className="t-content">
+                  <div className="t-header">
+                    <h3 className="t-role">{job.role} <span className="at">@</span> <span className="t-comp">{job.company}</span></h3>
+                    <span className="t-period">{job.period}</span>
                   </div>
-                  <div className="career-company">{job.company}</div>
-                  <p className="career-desc">{job.desc}</p>
+                  <p className="t-desc">{job.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -210,6 +212,7 @@ export default function Home() {
       <style jsx>{`
         .main-wrapper {
           padding-top: 80px;
+          position: relative;
         }
 
         .hero-section {
@@ -217,6 +220,8 @@ export default function Home() {
           padding: 60px 20px 50px;
           display: flex;
           justify-content: center;
+          position: relative;
+          z-index: 2;
         }
         
         .center-content { max-width: 600px; position: relative; }
@@ -299,7 +304,7 @@ export default function Home() {
           box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        .section { padding: 80px 20px; max-width: 840px; }
+        .section { padding: 80px 20px; max-width: 840px; position: relative; z-index: 2; }
         .section-label {
           font-family: 'Space Grotesk'; font-size: 11px;
           text-transform: uppercase; letter-spacing: 0.15em;
@@ -311,14 +316,76 @@ export default function Home() {
           background: #ddd; margin: 15px auto 0;
         }
 
-        .career-list { display: flex; flex-direction: column; gap: 48px; }
-        .career-item { display: flex; gap: 24px; }
-        .career-logo img { width: 52px; height: 52px; border-radius: 8px; border: 2px solid #000; box-shadow: 3px 3px 0 #ddd; }
-        .career-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-        .career-role { font-size: 18px; font-weight: 600; }
-        .career-period { font-size: 13px; color: #888; font-family: 'Space Grotesk'; }
-        .career-company { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-        .career-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+        /* --- TIMELINE COMPACT STYLE --- */
+        .timeline-container {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+          padding-left: 20px;
+        }
+        /* The Wire Line */
+        .timeline-line {
+          position: absolute;
+          left: 39px; /* center of logo (40px) roughly */
+          top: 20px;
+          bottom: 20px;
+          width: 2px;
+          background: #e0e0e0;
+          z-index: 0;
+        }
+
+        .timeline-row {
+          display: flex;
+          gap: 20px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .t-logo img {
+          width: 40px; height: 40px;
+          border-radius: 8px;
+          border: 1px solid #000;
+          background: #fff;
+          z-index: 2;
+          position: relative;
+        }
+
+        .t-content {
+          flex: 1;
+          padding-top: 2px; /* align with logo top */
+        }
+
+        .t-header {
+          display: flex;
+          align-items: baseline;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 4px;
+        }
+
+        .t-role {
+          font-size: 16px;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .at { color: #aaa; font-weight: 400; }
+        .t-comp { font-weight: 600; color: var(--text-primary); border-bottom: 2px solid var(--color-acid); }
+
+        .t-period {
+          font-size: 12px;
+          font-family: 'Space Grotesk';
+          color: #888;
+          margin-left: auto; /* Push to right */
+        }
+
+        .t-desc {
+          font-size: 14px;
+          color: var(--text-secondary);
+          line-height: 1.4;
+          max-width: 600px;
+        }
 
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
         .p-icon { width: 44px; height: 44px; border-radius: 8px; border: 1px solid #eee; }
@@ -329,9 +396,11 @@ export default function Home() {
         .footer { padding: 80px 0; text-align: center; font-size: 12px; color: #ccc; border-top: 1px solid #f9f9f9; }
 
         @media (max-width: 600px) {
-           .career-item { flex-direction: column; text-align: center; align-items: center; }
-           .career-header { flex-direction: column; gap: 4px; }
            .hero-title { font-size: 38px; }
+           .t-header { flex-direction: column; gap: 2px; }
+           .t-period { margin-left: 0; }
+           .timeline-line { left: 19px; } /* Adjust for smaller padding if needed */
+           .timeline-container { padding-left: 0; }
         }
       `}</style>
     </div>
