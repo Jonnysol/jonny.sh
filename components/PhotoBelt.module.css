@@ -1,128 +1,150 @@
-/* --- PhotoBelt.module.css --- */
-
-/* .beltWrapper: The outermost container for the entire photo belt.
-   It handles overflow (hiding parts of the belt that are off-screen)
-   and sets up the full viewport width effect. */
-.beltWrapper {
-  overflow: hidden; /* Crucial: Hides the parts of the .belt that extend beyond this wrapper. */
-  
-  /* --- Edge-to-Edge Full Width Styling (Negative Margin Technique) --- */
-  /* This technique makes the element span the entire browser window width, 
-     "breaking out" from the fixed width of its parent container. */
-  width: 100vw;       /* Sets width to 100% of the Viewport Width. */
-  /* The calc magic: 50% refers to half the width of the *parent* container.
-     50vw refers to half the width of the *viewport*.
-     margin-left: calc(50% - 50vw) effectively pulls the left edge of this element
-     from the center of its parent to the left edge of the viewport. Same for right. */
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  /* Note: The 'position: relative', 'left', and 'transform' properties previously used
-     for centering have been removed as this margin technique handles the breakout. */
-  /* --- End Edge-to-Edge Styling --- */
-
-  /* Vertical spacing for the belt */
-  margin-top: 12px;    /* Space above the belt. Adjust as needed. */
-  margin-bottom: 12px; /* Space below the belt. Adjust as needed. */
-
-  /* Cursor style to indicate interactivity */
-  cursor: grab;        /* Shows a "grab" hand when hovering, suggesting it's draggable. */
+.twistWrapper {
+   position: relative;
+   width: 100vw;
+   left: 50%;
+   right: 50%;
+   margin-left: -50vw;
+   margin-right: -50vw;
+   height: 550px;
+   /* Increased height for steeper angles */
+   overflow: hidden;
+   margin-top: 80px;
+   margin-bottom: 80px;
+   perspective: 1000px;
 }
 
-/* Changes cursor when the user is actively dragging. */
-.beltWrapper:active {
-  cursor: grabbing;    /* Shows a "grabbing" hand during the drag action. */
-}
-
-
-/* .belt: The direct child of .beltWrapper that actually contains all the .beltItem slides.
-   Embla Carousel applies its transform styles to this element to move the slides. */
 .belt {
-  display: flex;         /* Arranges .beltItem children in a row. Essential for Embla. */
-  will-change: transform;/* A performance hint for the browser, as 'transform' will be animated frequently by Embla. */
-  align-items: flex-start;/* Aligns items to the top if they have different heights (not an issue here as they are uniform). */
-  
-  /* Optional: If you want some space *inside* the belt before the first item or after the last,
-     you can add padding here. However, with looping, this might look a bit odd unless carefully managed.
-     The margin-right on .beltItem is usually preferred for spacing *between* items. */
-  /* padding-left: 10px; */
-  /* padding-right: 10px; */
+   position: absolute;
+   top: 50%;
+   left: 0;
+   width: 120%;
+   /* wider to cover rotation holes */
+   display: flex;
+   margin-left: -10%;
+   /* Center the extra width */
+   pointer-events: none;
 }
 
-
-/* .beltItem: Represents a single slide/photo in the carousel. */
-.beltItem {
-  /* Flexbox properties for slide behavior */
-  flex: 0 0 auto; /* Prevents items from growing or shrinking. They take their specified 'width'. */
-  
-  /* --- Slide Width & Responsiveness --- */
-  /* 'width' controls how wide each photo item is. */
-  /* Using 'vw' (viewport width) units makes the items responsive to screen size. */
-  /* Example: 28vw means roughly 100/28 = ~3.5 items would fit across the viewport width if there were no margins. */
-  width: 20vw; /* Each item takes up 22% of the viewport width. Adjust for more/less items visible. */
-  /* Adjust '28vw' to show more or fewer items:
-     - Smaller vw (e.g., 20vw) = more items visible, items are narrower.
-     - Larger vw (e.g., 33vw) = fewer items visible, items are wider. */
-
-  /* Optional: Constrain item size on very large or very small screens. */
-  max-width: 400px; /* Images won't grow wider than 400px, even on huge screens. Remove if you want them to always scale up. */
-  /* min-width: 180px; */ /* Images won't shrink smaller than 180px. Useful for readability on small screens. */
-
-  /* --- Aspect Ratio --- */
-  /* Maintains the proportions of the image (width / height). */
-  /* Your original images were 320px wide by 280px high. */
-  aspect-ratio: 320 / 280; /* The item will maintain this width-to-height ratio. Height becomes automatic. */
-  /* If you change image sources to ones with a different aspect ratio, update this value.
-     For example, for square images, use '1 / 1' or just '1'. For 16:9, use '16 / 9'. */
-
-  /* --- Spacing & Appearance --- */
-  margin-right: 2px; /* Gap between this item and the next one. Adjust for more/less space. */
-  
-  /* --- Curvature (Border Radius) for the ITEM itself --- */
-  /* This rounds the corners of the .beltItem container. */
-  border-radius: 6px; /* Slightly less than item's radius for a nice frame effect */
-  overflow: hidden; /* Crucial for parallax: hide parts of image that move outside */
-  
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* Subtle shadow for depth. Adjust values or remove. */
-  user-select: none; /* Prevents text selection if user accidentally drags over text content (not an issue with just images). */
-  
-  /* --- Border for the ITEM --- */
-  /* This is the white border around each photo item. */
-  border: 1px solid #fff; /* '4px' is thickness, 'solid' is style, '#fff' is color (white). */
-  /* Change color (e.g., '#000' for black), thickness, or style (e.g., 'dashed'). */
-
-  position: relative; /* Needed for some advanced Embla features or if you add absolutely positioned elements inside. */
+/* BELT 1: Standard, slight tilt */
+.beltOne {
+   transform: translateY(-50%) rotate(-5deg) translateZ(0);
+   /* Steeper */
+   background: var(--color-acid);
+   /* Highlighter background for strip */
+   padding: 15px 0;
+   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+   /* Deeper shadow */
+   z-index: 3;
+   /* Top layer */
+   border-top: 3px solid #000;
+   border-bottom: 3px solid #000;
 }
 
+/* BELT 2: Steeper, Intersecting */
+.beltTwo {
+   transform: translateY(-50%) rotate(10deg) translateZ(-50px);
+   /* Much Steeper + Opposite */
+   background: #000;
+   padding: 15px 0;
+   z-index: 1;
+   /* Bottom layer */
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+   opacity: 0.95;
+}
 
-/* .beltItem img: The actual <img> tag inside each slide. */
-.beltItem img {
-  display: block; /* Removes extra space below the image that inline elements sometimes have. */
+.track {
+   display: flex;
+   gap: 20px;
+   animation: scroll 30s linear infinite;
+   padding-left: 20px;
+}
 
-  /* --- Image Sizing within the Item --- */
-  /* Make the image fill the entire .beltItem container. */
-  /* Image takes 100% of the .beltItem's height (which is determined by width + aspect-ratio). */
-  --image-size: 95%; /* Original image size */
-  width: var(--image-size);
-  height: var(--image-size);
-  /* --- Image Fitting & Cropping --- */
-  /* 'object-fit' controls how the image resizes to fit its container if its aspect ratio doesn't match .beltItem's aspect-ratio. */
-  object-fit: cover; 
-  /* 'cover': Scales the image to maintain its aspect ratio while filling the element's entire content box.
-              If the image's aspect ratio does not match the aspect ratio of its box, then the object will be clipped to fit.
-     Other options:
-     - 'contain': Scales the image to maintain its aspect ratio while fitting within the element's content box.
-                  The entire object is made to fill the box, while preserving its aspect ratio, so the object will be "letterboxed"
-                  if its aspect ratio does not match the aspect ratio of the box.
-     - 'fill': Stretches the image to fill the content box, regardless of its aspect ratio (may distort image).
-     - 'none': The image is not resized.
-     - 'scale-down': The image is sized as if 'none' or 'contain' were specified, whichever would result in a smaller concrete object size. */
+.trackReverse {
+   display: flex;
+   gap: 20px;
+   animation: scrollReverse 25s linear infinite;
+   /* Faster/Slower */
+   padding-left: 20px;
+}
 
-  /* --- Curvature (Border Radius) for the IMAGE itself --- */
-  /* This rounds the corners of the actual image, inside the .beltItem's border and padding. */
-  /* If .beltItem has a border-radius of 8px and a border of 4px, and you want the image
-     to also look rounded *inside* that frame, this radius should typically be smaller.
-     Example: .beltItem radius (8px) - border width (4px) = image radius (4px) */
-  border-radius: 22px; /* Adjust for more or less rounded corners on the image. '0px' for sharp image corners. */
-  
-  pointer-events: none;/* Prevents the image's default drag behavior from interfering with Embla's dragging. */
+.card {
+   width: 250px;
+   height: 160px;
+   border-radius: 12px;
+   /* ROUNDED CORNERS AS REQUESTED */
+   overflow: hidden;
+   flex-shrink: 0;
+   border: 2px solid #000;
+   background: #fff;
+   position: relative;
+}
+
+.card img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+.cardAlt {
+   border-color: var(--color-acid);
+   filter: grayscale(100%) contrast(120%);
+}
+
+.shadowOverlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: radial-gradient(circle at center, transparent 30%, rgba(255, 255, 255, 0.8) 100%);
+   z-index: 5;
+   pointer-events: none;
+}
+
+@keyframes scroll {
+   0% {
+      transform: translateX(0);
+   }
+
+   100% {
+      transform: translateX(-50%);
+   }
+}
+
+@keyframes scrollReverse {
+   0% {
+      transform: translateX(-50%);
+   }
+
+   100% {
+      transform: translateX(0);
+   }
+}
+
+/* SANDWICH MARQUEE */
+.marqueeLayer {
+   position: absolute;
+   top: 50%;
+   left: 0;
+   width: 120%;
+   margin-left: -10%;
+   transform: translateY(-50%) rotate(2deg);
+   /* Slightly different angle */
+   z-index: 2;
+   /* Between Belt 1 (z:3) and Belt 2 (z:1) */
+   pointer-events: none;
+   opacity: 0.8;
+   mix-blend-mode: multiply;
+   /* Blends nicely */
+}
+
+.marqueeStrip {
+   white-space: nowrap;
+   font-family: 'Space Grotesk', sans-serif;
+   font-weight: 800;
+   font-size: 80px;
+   /* HUGE text */
+   color: rgba(0, 0, 0, 0.08);
+   /* Subtle watermark feel */
+   animation: scroll 40s linear infinite;
 }

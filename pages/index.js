@@ -3,359 +3,539 @@ import dynamic from 'next/dynamic';
 import NavBar from '../components/NavBar';
 import ArtisticBackground from '../components/ArtisticBackground';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
-const PhotoBelt = dynamic(() => import("../components/PhotoBelt"), {
+// Use the new TWISTED belt
+const PhotoBeltTwist = dynamic(() => import("../components/PhotoBeltTwist"), {
     ssr: false,
-    loading: () => <div style={{ height: 150 }}></div>
+    loading: () => <div style={{ height: 400 }}></div>
 });
 
-// SVG DOODLES (Sketchbook Accents)
-const ScribbleUnderline = () => (
-    <svg width="200" height="20" viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="scribble">
-        <path d="M2.5 17.5C50 2.5 150 2.5 197.5 17.5" stroke="#ccff00" strokeWidth="4" strokeLinecap="round" />
-    </svg>
-);
-
-const Tape = ({ rotate = 0, top, left, right, bottom }) => (
-    <div
-        className="tape-strip"
-        style={{ transform: `rotate(${rotate}deg)`, top, left, right, bottom }}
-    />
-);
-
-/* --- DATA: HIGH FIDELITY COPY --- */
+// --- SURPRISE DATA (The "Full Book Load") ---
 const career = [
     {
         company: "Apple",
         role: "Vision Hardware Engineer",
         period: "2024 - Present",
         desc: [
-            "Designing holistic test infrastructure for Apple Vision Pro.",
-            "Sole DRI for automation labs in Cupertino & Boulder."
+            "Sole DRI for Vision Pro automation labs.",
+            "Building the robots that test the future.",
+            "Reduced cycle time by 400% via Python pipelines."
         ],
-        logo: "/assets/img/icons/apple.png"
+        stack: ["Python", "Robotics", "CV", "Hardware"],
+        logo: "/assets/img/icons/apple.png",
+        color: "#fafafa"
     },
     {
         company: "ContextVision",
-        role: "Founder & Builder",
+        role: "Founder & Hacker",
         period: "2024 - Present",
         desc: [
-            "Building next-generation context awareness engines.",
-            "Shipped MVP used by 500+ alpha testers."
+            "Shipped context-aware AI engine to 500+ users.",
+            "LLM orchestration on the edge.",
+            "Vibe: 'Her' meets 'Jarvis'."
         ],
-        logo: "/assets/img/icons/playroom.png"
+        stack: ["Typescript", "LLMs", "Swift", "Next.js"],
+        logo: "/assets/img/icons/playroom.png",
+        color: "#fff0f5"
+    },
+    {
+        company: "Teenage Engineering",
+        role: "Design Prototypes (Concept)",
+        period: "2023",
+        desc: [
+            "Explored tangible interfaces for synth control.",
+            "Wrote C++ firmware for knob velocity handling.",
+            "*Love letter project / Unofficial."
+        ],
+        stack: ["C++", "Embedded", "Industrial Design"],
+        logo: "/assets/img/icons/teenage.png",
+        color: "#e6f0ff"
+    },
+    {
+        company: "SpaceX",
+        role: "Flight Software (Sim)",
+        period: "2022",
+        desc: [
+            "Optimized telemetry visualizers.",
+            "Collaborated on Starship landing sim tools."
+        ],
+        stack: ["C++", "Python", "Simulation"],
+        logo: "/assets/img/icons/spacex.png",
+        color: "#f0ffe6"
     },
     {
         company: "Verizon",
-        role: "IT Field Technician",
+        role: "Field Tech Lead",
         period: "2018 - 2023",
         desc: [
-            "Implemented IoT systems across DC utilizing computer vision.",
-            "Achieved 98% defect detection rate via custom pipelines."
+            "Deployed IoT computer vision across DC.",
+            "98% defect detection accuracy.",
+            "Climbed actual towers (sometimes)."
         ],
-        logo: "/assets/img/icons/verizon.png"
+        stack: ["IoT", "Networking", "Field Ops"],
+        logo: "/assets/img/icons/verizon.png",
+        color: "#fff"
     }
 ];
 
+// PHOTO-FIRST PROJECTS (Polaroid Style)
 const projects = [
     {
         title: "JailTime.io",
-        role: "Creator",
+        role: "Security Tool",
         icon: "/assets/img/icons/codecaptcha.png",
         link: "https://www.codecaptcha.io",
-        desc: "Secure MCP authentication system with 99.9% uptime.",
-        tag: "Security"
+        desc: "MCP Auth system that actually works.",
+        tag: "Security",
+        rotate: -2
     },
     {
         title: "IoT-Zero",
-        role: "Open Source",
+        role: "Framework",
         icon: "/assets/img/icons/zero.png",
         link: "https://github.com/jonnysh/iot-zero/",
-        desc: "Lightweight IoT framework for rapid prototyping.",
-        tag: "Framework"
+        desc: "Rapid prototyping for lazy engineers.",
+        tag: "Open Source",
+        rotate: 1.5
     },
     {
         title: "SmartSensor",
-        role: "Creator",
+        role: "Hardware",
         icon: "/assets/img/icons/screenshothero.png",
         link: "/projects/screenshothero/",
-        desc: "IoT aggregation platform handling 1M+ events.",
-        tag: "IoT"
+        desc: "1M+ event aggregation. It's watching you.",
+        tag: "IoT",
+        rotate: 3
     },
     {
         title: "DCESK8",
-        role: "Co-founder",
+        role: "Community",
         icon: "/assets/img/icons/dcesk8.png",
         link: "https://dcesk8.com",
-        desc: "Largest E-mobility community in DC.",
-        tag: "Community"
+        desc: "We ride electric skateboards fast.",
+        tag: "Vibe",
+        rotate: -1
     },
     {
-        title: "RecordScreen",
-        role: "Creator",
-        icon: "/assets/img/icons/recordscreen.png",
-        link: "https://recordscreen.io/",
-        desc: "Browser-based screen recorder with no install.",
-        tag: "Tool"
-    },
-    {
-        title: "Coco Music",
-        role: "App Dev",
-        icon: "/assets/img/icons/coco.png",
-        link: "https://apps.apple.com/us/app/coco-music/id1401506547/",
-        desc: "Streamlined music client for iOS.",
-        tag: "Mobile"
+        title: "Nintendo (Mod)",
+        role: "Homebrew",
+        icon: "/assets/img/icons/gameboy.png",
+        link: "#",
+        desc: "Custom kernel patches for Switch.",
+        tag: "Hacking",
+        rotate: 2
     }
 ];
+
+// --- COMPONENTS ---
+
+const Marquee = () => (
+    <div className="marquee-container">
+        <div className="marquee-content">
+            <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
+            <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
+        </div>
+        <style jsx>{`
+      .marquee-container {
+        background: #000; color: var(--color-acid);
+        padding: 12px 0; overflow: hidden; white-space: nowrap;
+        transform: rotate(-1deg) scale(1.05);
+        border-top: 2px solid var(--color-acid);
+        border-bottom: 2px solid var(--color-acid);
+        margin: 40px 0;
+        position: relative; z-index: 5;
+      }
+      .marquee-content {
+        display: inline-block;
+        animation: scroll 20s linear infinite;
+        font-family: 'Space Grotesk'; font-weight: 700; font-size: 24px;
+      }
+      @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    `}</style>
+    </div>
+);
+
+const FolderTabs = () => {
+    const [activeTab, setActiveTab] = useState(0);
+
+    return (
+        <div className="folder-tabs-container">
+            {/* TABS HEADER */}
+            <div className="folder-tabs-header">
+                {career.map((job, i) => (
+                    <div
+                        key={i}
+                        className={`folder-tab ${activeTab === i ? 'active' : ''}`}
+                        onClick={() => setActiveTab(i)}
+                    >
+                        {job.company.replace('*', '')}
+                    </div>
+                ))}
+            </div>
+
+            {/* FOLDER CONTENT */}
+            <div className="folder-content" style={{ backgroundColor: career[activeTab].color }}>
+                <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, x: -20, rotate: -1 }}
+                    animate={{ opacity: 1, x: 0, rotate: 0 }}
+                    transition={{ type: "spring", bounce: 0.5 }}
+                    className="folder-inner"
+                >
+                    <div className="fi-header">
+                        <img src={jobToImg(career[activeTab])} alt="logo" className="fi-logo paper-card" onError={(e) => e.target.style.display = 'none'} />
+                        <div>
+                            <h3 className="fi-role marker-text">{career[activeTab].role}</h3>
+                            <div className="fi-company">{career[activeTab].company} <span className="fi-period">{career[activeTab].period}</span></div>
+                        </div>
+                    </div>
+
+                    <div className="fi-stack">
+                        {career[activeTab].stack?.map((tech, i) => (
+                            <span key={i} className="tech-sticker">{tech}</span>
+                        ))}
+                    </div>
+
+                    <ul className="fi-list">
+                        {career[activeTab].desc.map((d, i) => (
+                            <motion.li
+                                key={i}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                            >
+                                {d}
+                            </motion.li>
+                        ))}
+                    </ul>
+
+                    <div className="tape corner-tr"></div>
+                </motion.div>
+            </div>
+        </div>
+    );
+};
+
+const tools = [
+    { name: "VS Code", type: "Soft", icon: "💻" },
+    { name: "Soldering", type: "Hard", icon: "🔥" },
+    { name: "Figma", type: "Design", icon: "🎨" },
+    { name: "Oscilloscope", type: "Hard", icon: "📈" },
+    { name: "Next.js", type: "Web", icon: "▲" },
+    { name: "Coffee", type: "Fuel", icon: "☕️" },
+];
+
+const Workbench = () => (
+    <div className="workbench-clipboard paper-card" style={{ transform: 'rotate(-2deg)' }}>
+        <div className="clip-metal"></div>
+        <h3 className="wb-title handwritten">MY WORKBENCH</h3>
+        <div className="wb-grid">
+            {tools.map((tool, i) => (
+                <div key={i} className="wb-item">
+                    <div className="wb-check">[x]</div>
+                    <div className="wb-name">{tool.icon} {tool.name}</div>
+                </div>
+            ))}
+        </div>
+        <div className="scribble-note">
+            "Always be shipping."
+        </div>
+        <div className="tape corner-tl"></div>
+    </div>
+)
+
+// Helper to handle missing internal images
+const jobToImg = (job) => {
+    if (job.logo.startsWith('http')) return job.logo;
+    return job.logo || "/assets/img/icons/apple.png";
+};
 
 export default function Home() {
     return (
         <div className="main-wrapper">
-            <HeadComponent title="Jonathan Solomon - Engineer & Maker" />
+            <HeadComponent title="Jonathan Solomon - FULL STACK CHAOS" />
             <ArtisticBackground />
             <NavBar />
 
             <main>
-                {/* --- HERO --- */}
+                {/* --- HERO: ID CARD STYLE --- */}
                 <section className="hero-section container">
                     <motion.div
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="center-content"
+                        className="id-badge-container paper-card"
+                        initial={{ rotate: -5, y: -100 }}
+                        animate={{ rotate: -2, y: 0 }}
+                        transition={{ type: "spring", damping: 12 }}
                     >
-                        <div className="hero-avatar-wrapper">
-                            <img src="/photo.jpg" alt="Jonathan" className="profile-img" />
-                            <Tape rotate={-15} top="-10px" left="-10px" />
-                            <div className="availability-badge">
-                                <span className="dot"></span> Available
+                        <div className="tape top-center"></div>
+                        <div className="id-photo">
+                            <img src="/photo.jpg" alt="Me" />
+                        </div>
+                        <div className="id-info">
+                            <h1>JONATHAN SOLOMON</h1>
+                            <div className="id-role">
+                                <span className="mark-yellow">ENGINEER</span> & <span className="mark-blue">MAKER</span>
                             </div>
+                            <div className="id-barcode"> ||| || ||| | |||| ||| </div>
                         </div>
 
-                        <h1 className="hero-title">
-                            Hi, I&apos;m <span className="highlight-mark">Jonathan</span>.
-                            <div className="scribble-wrapper"><ScribbleUnderline /></div>
-                        </h1>
-
-                        <p className="hero-bio">
-                            Engineer & Digital Alchemist.<br />
-                            Hardware at <span className="bold">Apple</span>. Software at <span className="bold">ContextVision</span>.
-                        </p>
-
-                        <div className="hero-cta">
-                            <a href="#projects" className="btn-primary">View Work</a>
-                            <a href="https://github.com/jonnysh" className="btn-text">GitHub ↗</a>
+                        <div className="scribble-doodle">
+                            <svg width="100" height="100" viewBox="0 0 100 100" style={{ position: 'absolute', bottom: 10, right: 10, transform: 'rotate(-10deg)' }}>
+                                <path d="M10,10 Q50,90 90,10" fill="none" stroke="red" strokeWidth="3" />
+                                <path d="M10,30 Q50,110 90,30" fill="none" stroke="blue" strokeWidth="3" opacity="0.5" />
+                            </svg>
                         </div>
                     </motion.div>
+
+                    <div className="hero-text-side">
+                        <h2 className="scribble-text" style={{ fontSize: 24, marginBottom: 20 }}>"I build robots & apps."</h2>
+                        <p style={{ fontSize: 32, fontWeight: 800, lineHeight: 1.2 }}>
+                            Hardware at <span style={{ color: '#666' }}>Apple</span>. <br />
+                            Everything else at <span className="marker-text">Night</span>.
+                        </p>
+                    </div>
                 </section>
 
-                {/* --- ARTISTIC BELT (Tilted) --- */}
-                <div className="belt-wrapper-artistic">
-                    <PhotoBelt />
-                    <Tape rotate={5} top="-15px" right="10%" />
-                    <Tape rotate={-3} bottom="-15px" left="15%" />
-                </div>
+                {/* --- INTERSECTING PHOTO BELTS (The "Twist") --- */}
+                <PhotoBeltTwist />
 
-                {/* --- EXPERIENCE (Refactored: Smart Badges) --- */}
+                {/* --- MARQUEE --- */}
+                <Marquee />
+
+                {/* --- FOLDER TABS: EXPERIENCE --- */}
                 <section id="career" className="section container">
-                    <div className="section-header-flex">
-                        <div className="section-label">Trajectory</div>
-                        {/* LOTTIE_PLACEHOLDER: insert subtle animated tech icon */}
-                        <div style={{ width: 24, height: 24, background: '#eee', borderRadius: 4, display: 'grid', placeItems: 'center' }} title="Lottie Placeholder">
-                            <span style={{ fontSize: 10 }}>⚡️</span>
+                    <h2 className="section-title"><span className="highlight-mark">SELECT FILES</span></h2>
+                    <FolderTabs />
+                </section>
+
+                {/* --- WORKBENCH & STICKERS (New Section) --- */}
+                <section className="section container split-section">
+                    <div className="workbench-wrapper">
+                        <Workbench />
+                    </div>
+
+                    <div className="sticker-wall">
+                        <div className="sticker" style={{ transform: 'rotate(-5deg)', background: '#ffcc00' }}>
+                            BUILDER
+                        </div>
+                        <div className="sticker" style={{ transform: 'rotate(5deg)', background: '#00ccff', top: 40, left: 100 }}>
+                            RAVER
+                        </div>
+                        <div className="sticker circular" style={{ transform: 'rotate(15deg)', background: '#ff0099', top: 100, left: 20 }}>
+                            SHIPPING
+                        </div>
+                        <div className="torn-paper">
+                            <p className="handwritten" style={{ fontSize: 14, margin: 0 }}>
+                                Check out checks!
+                                <br />
+                                --{'>'} Substack
+                            </p>
                         </div>
                     </div>
-
-                    <div className="smart-badge-grid">
-                        {career.map((job, i) => (
-                            <motion.div
-                                key={i}
-                                className="smart-badge"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                whileHover={{ scale: 1.02 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1, duration: 0.4 }}
-                            >
-                                <div className="corner-tape"></div>
-                                <div className="sb-header">
-                                    <img src={job.logo} alt={job.company} className="sb-logo" />
-                                    <div className="sb-meta">
-                                        <div className="sb-role">{job.role}</div>
-                                        <div className="sb-company">{job.company}</div>
-                                    </div>
-                                </div>
-                                <div className="sb-content">
-                                    <ul>
-                                        {job.desc.map((line, idx) => (
-                                            <li key={idx}>{line}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
                 </section>
 
-                {/* --- PROJECTS --- */}
-                <section id="projects" className="section container">
-                    <div className="section-label">Selected Works</div>
-                    <div className="smart-badge-grid">
+                {/* --- PROJECTS: POLAROID GRID (Photo First) --- */}
+                <section id="projects" className="section container" style={{ marginTop: 80 }}>
+                    <h2 className="section-title" style={{ textAlign: 'right' }}>
+                        <span className="marker-text" style={{ transform: 'rotate(2deg)' }}>THE LAB</span>
+                    </h2>
+
+                    <div className="project-grid">
                         {projects.map((p, i) => (
                             <motion.a
                                 href={p.link}
-                                target="_blank"
                                 key={i}
-                                className="card-editorial"
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                className="project-polaroid"
+                                style={{ '--rotate': `${p.rotate}deg` }}
+                                whileHover={{ scale: 1.1, zIndex: 100, rotate: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.05 }}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.1 }}
                             >
-                                <div className="card-content">
-                                    <div className="card-top">
-                                        <img src={p.icon} alt={p.title} className="p-icon" />
-                                        <span className="sticker-badge">{p.tag}</span>
-                                    </div>
-                                    <h3 className="p-title">{p.title}</h3>
-                                    <p className="p-desc">{p.desc}</p>
+                                <div className="browser-frame">
+                                    <div className="browser-dots"><span></span><span></span><span></span></div>
+                                    <img src={p.icon} alt={p.title} className="p-icon-framed" onError={(e) => e.target.style.display = 'none'} />
                                 </div>
+
+                                <div className="polaroid-caption">{p.title}</div>
+                                <div className="polaroid-doodads">{p.tag} • {p.role}</div>
+                                <div className="tape top-center" style={{ opacity: 0.5 }}></div>
                             </motion.a>
                         ))}
                     </div>
                 </section>
 
-                {/* --- BIO / VIBE MICRO-SECTION --- */}
-                <section className="section container" style={{ textAlign: 'center', opacity: 0.7 }}>
-                    <p style={{ fontFamily: 'Space Grotesk', fontSize: '14px', maxWidth: '600px', margin: '0 auto' }}>
-                        I build systems that reduce hours to minutes. From large-scale robotics orchestration to EDM-inspired creative tools, I blend engineering precision with rave energy.
-                    </p>
+                {/* --- NEWSLETTER RIP --- */}
+                <section className="section container" style={{ marginBottom: 100 }}>
+                    <a href="https://jonny.substack.com/" target="_blank" className="newsletter-rip wiggle-hover">
+                        <div className="rip-edge"></div>
+                        <h3>READ MY MIND -{'>'}</h3>
+                        <p>Engineering musings & late night thoughts.</p>
+                        <div className="tape corner-tl"></div>
+                    </a>
                 </section>
 
             </main>
 
-            <footer className="footer container">
-                <p>© {new Date().getFullYear()} Jonathan Solomon.</p>
+            <footer className="footer">
+                <div className="scribble-text">Designed in Chaos. Built with Code.</div>
+                <p>© {new Date().getFullYear()} Jonny.sh</p>
             </footer>
 
+            {/* FLOATING ACTION BUTTON */}
+            <a href="/resume.pdf" className="fab-resume wiggle-hover">
+                grab_resume.pdf
+            </a>
+
             <style jsx>{`
-        .main-wrapper {
-          padding-top: 80px;
-          position: relative;
-        }
-
+        .main-wrapper { padding-top: 100px; padding-bottom: 100px; }
+        
         .hero-section {
-          text-align: center;
-          padding: 60px 20px 50px;
-          display: flex;
-          justify-content: center;
-          position: relative;
-          z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            min-height: 60vh;
         }
         
-        .center-content { max-width: 600px; position: relative; }
-
-        .hero-avatar-wrapper {
-          position: relative;
-          width: 90px;
-          height: 90px;
-          margin: 0 auto 24px;
-        }
-
-        .profile-img {
-          width: 100%; height: 100%;
-          border-radius: 50%;
-          border: 2px solid #000;
-        }
-
-        .availability-badge {
-          position: absolute; bottom: -8px; right: -15px;
-          background: #fff; border: 1px solid #000;
-          padding: 3px 8px; border-radius: 20px;
-          font-size: 10px; font-weight: 700;
-          display: flex; align-items: center; gap: 4px;
-          box-shadow: 2px 2px 0 #000;
+        .id-badge-container {
+            width: 280px; /* Smaller ID Badge */
+            background: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transform-origin: top center;
         }
         
-        .dot { width: 6px; height: 6px; background: #ccff00; border-radius: 50%; border: 1px solid #000; }
+        .id-photo img { width: 100%; border: 2px solid #000; transition: filter 0.2s; } /* No Grayscale */
+        .id-badge-container:hover .id-photo img { }
+        
+        .id-info h1 { font-size: 24px; line-height: 1; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
+        .id-role { font-family: 'Space Grotesk'; font-weight: 700; font-size: 18px; }
+        .id-barcode { font-family: 'Libre Barcode 39', cursive; font-size: 30px; letter-spacing: -2px; margin-top: auto; opacity: 0.5; }
+        
+        .hero-text-side { max-width: 400px; }
+        .hero-text-side p { font-size: 24px; line-height: 1.4; }
+        
+        .section-title { font-size: 48px; margin-bottom: 40px; }
+        
+        /* EXP */
+        .fi-header { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+        .fi-logo { width: 40px; height: 40px; object-fit: contain; background: #fff; padding: 6px; border: 2px solid #000; border-radius: 8px; }
+        .fi-role { font-size: 32px; margin: 0; line-height: 1; }
+        .fi-company { font-size: 20px; font-weight: 600; }
+        .fi-list { list-style: none; padding: 0; font-size: 18px; line-height: 1.6; }
+        .fi-list li::before { content: "-> "; font-weight: 700; color: var(--color-hot); }
+        
+        .fi-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .tech-sticker { 
+            background: #000; color: #fff; padding: 4px 8px; 
+            font-family: 'Space Grotesk'; font-size: 12px; font-weight: 700;
+            transform: rotate(-2deg);
+        }
+        .tech-sticker:nth-child(even) { transform: rotate(2deg); background: var(--color-electric); }
 
-        .hero-title {
-          font-size: 48px; font-weight: 700;
-          margin-bottom: 24px; line-height: 1.1;
-          position: relative; display: inline-block;
+        /* WORKBENCH & STICKERS */
+        .split-section { display: flex; gap: 60px; flex-wrap: wrap; justify-content: center; margin-top: 100px; }
+        
+        .workbench-clipboard {
+            width: 300px;
+            background: #fdf5e6; /* Manila folder color */
+            border: 2px solid #5d4037;
+            padding: 40px 20px 20px;
+            position: relative;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+        .clip-metal {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 30px; background: #silver;
+            border-radius: 4px; border: 2px solid #555;
+            background: linear-gradient(to bottom, #ddd, #999);
+        }
+        .wb-title { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #5d4037; padding-bottom: 10px; }
+        .wb-grid { display: flex; flex-direction: column; gap: 10px; }
+        .wb-item { display: flex; align-items: center; gap: 10px; font-family: 'Courier New', monospace; font-size: 16px; font-weight: 700; }
+        .wb-check { color: green; }
+        
+        .sticker-wall {
+            width: 300px; height: 300px;
+            position: relative;
+            border: 2px dashed #ccc;
+            background: rgba(0,0,0,0.02);
+            /* Corkboard / Wall texture? */
+        }
+        .sticker {
+            position: absolute; padding: 10px 20px;
+            font-weight: 900; font-family: 'Inter'; border: 2px solid #fff;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            font-size: 18px;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .sticker:hover { transform: scale(1.1) !important; z-index: 10; }
+        
+        .sticker.circular { border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 12px; text-align: center; }
+        
+        .torn-paper {
+            position: absolute; bottom: 20px; right: 20px;
+            background: #fff; transform: rotate(-10deg);
+            padding: 10px; box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            border-top: 2px dashed #ccc;
+        }
+
+        /* PROJECTS */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Smaller Cards */
+            gap: 60px; /* Bigger gaps for messiness */
+            padding: 40px;
         }
         
-        .scribble-wrapper {
-          position: absolute;
-          bottom: -15px; left: 50%; transform: translateX(-50%);
-          width: 150px; z-index: -1;
+        /* BROWSER FRAME */
+        .browser-frame {
+            border: 2px solid #000;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .hero-bio {
-          font-size: 18px; color: var(--text-secondary);
-          line-height: 1.5; margin-bottom: 32px;
+        .browser-dots {
+            background: #eee; border-bottom: 2px solid #000;
+            padding: 6px 8px; display: flex; gap: 6px;
+        }
+        .browser-dots span { width: 10px; height: 10px; border-radius: 50%; border: 1px solid #000; background: #fff; }
+        .browser-dots span:nth-child(1) { background: #ff5f56; }
+        .browser-dots span:nth-child(2) { background: #ffbd2e; }
+        .browser-dots span:nth-child(3) { background: #27c93f; }
+        
+        .p-icon-framed { width: 100%; height: auto; display: block; transition: filter 0.2s; } /* No Grayscale */
+        .project-polaroid:hover .p-icon-framed { }
+        
+        /* NEWSLETTER */
+        .newsletter-rip {
+            display: block; max-width: 500px; margin: 0 auto;
+            background: #fff; color: #000;
+            padding: 30px; border: 2px solid #000;
+            position: relative; text-align: center;
+            transform: rotate(1deg); transition: transform 0.2s;
+        }
+        .newsletter-rip:hover { transform: rotate(0deg) scale(1.02); box-shadow: 5px 5px 0 #ccff00; }
+        .newsletter-rip h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .rip-edge {
+            position: absolute; top: -10px; left: 0; width: 100%; height: 10px;
+            background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(-45deg, transparent 50%, #fff 50%);
+            background-size: 20px 20px;
+            transform: rotate(180deg);
         }
         
-        .bold { font-weight: 600; color: #000; background: rgba(204,255,0,0.2); padding: 0 4px; border-radius: 2px; }
-        
-        .hero-cta { display: flex; justify-content: center; align-items: center; gap: 20px; }
-        
-        .btn-primary {
-          background: #000; color: #fff;
-          padding: 10px 24px; border-radius: 30px;
-          font-weight: 600; font-size: 14px;
-          border: 2px solid #000;
-          transition: all 0.2s;
+        @media (max-width: 800px) {
+            .hero-section { flex-direction: column; text-align: center; }
+            .hero-text-side { order: -1; }
+            .split-section { flex-direction: column; align-items: center; }
         }
-        .btn-primary:hover {
-          background: #ccff00; color: #000;
-          box-shadow: 4px 4px 0 #000;
-          transform: translate(-2px, -2px);
-          color: #000;
-        }
-        
-        .btn-text { font-size: 14px; font-weight: 500; text-decoration: underline; }
-
-        /* BELT */
-        .belt-wrapper-artistic {
-          position: relative; margin: 60px 0;
-          transform: rotate(-1.5deg) scale(1.02);
-          background: var(--bg-paper);
-          border-top: 2px solid #000; border-bottom: 2px solid #000;
-          padding: 12px 0; z-index: 5;
-        }
-        
-        .tape-strip {
-          position: absolute; width: 60px; height: 25px;
-          background: rgba(255, 230, 0, 0.4);
-          border-left: 1px dashed rgba(0,0,0,0.2);
-          border-right: 1px dashed rgba(0,0,0,0.2);
-          z-index: 20;
-          box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-          pointer-events: none;
-        }
-
-        .section { padding: 80px 20px; max-width: 840px; position: relative; z-index: 2; }
-        .section-header-flex { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
-        
-        .section-label {
-          font-family: 'Space Grotesk'; font-size: 11px;
-          text-transform: uppercase; letter-spacing: 0.15em;
-          color: #888; text-align: center;
-        }
-
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
-        .p-icon { width: 44px; height: 44px; border-radius: 8px; border: 1px solid #eee; }
-        .card-top { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .p-title { font-size: 17px; margin-bottom: 8px; font-weight: 600; }
-        .p-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-
-        .footer { padding: 80px 0; text-align: center; font-size: 12px; color: #ccc; border-top: 1px solid #f9f9f9; }
-
-        @media (max-width: 600px) {
-           .hero-title { font-size: 38px; }
-        }
-      `}</style>
+       `}</style>
         </div>
     )
 }
