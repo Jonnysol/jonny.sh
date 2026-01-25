@@ -1,39 +1,33 @@
-/* --- "Refined Editorial" Design System --- */
+/* --- "Refined Editorial" + Sketchbook Polish --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=Permanent+Marker&display=swap');
 
 :root {
-    /* --- Palette (Clean Base + Neon Accents) --- */
+    /* --- Palette --- */
     --bg-paper: #ffffff;
     --bg-contrast: #0d0d0d;
 
     --color-acid: #ccff00;
-    /* POP accent for badges/highlights */
+    /* POP accent */
     --color-electric: #2b6eff;
     /* Tech Blue */
     --color-hot: #ff2a6d;
     /* Energy Pink */
-    --color-highlighter: rgba(204, 255, 0, 0.5);
-    /* Marker yellow/green */
+    --color-highlighter: rgba(204, 255, 0, 0.4);
 
     --text-primary: #050505;
     --text-secondary: #5a5a5a;
 
-    /* --- Transforms & Borders --- */
-    --skew-angle: -1.5deg;
-    /* The "Zine" tilt */
+    /* --- Borders & Shadows --- */
+    --skew-angle: -1deg;
     --border-black: 2px solid #000;
-    --border-thin: 1px solid #e5e5e5;
-
     --shadow-hard: 4px 4px 0px #000;
-    --shadow-hover: 6px 6px 0px var(--color-acid);
 
     /* --- Dimensions --- */
     --content-width: 1000px;
-    /* Tighter for better readability */
     --nav-height: 64px;
 }
 
-/* --- Reset & Base --- */
+/* --- Base & Texture --- */
 html,
 body {
     padding: 0;
@@ -43,6 +37,32 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+}
+
+/* PAPER GRAIN TEXTURE */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    /* Below Nav, above content */
+}
+
+/* NUKE SIDEBARS (Infrastructure Fix) */
+.sidebar,
+#sidebar,
+.nav-side,
+.side-menu {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 * {
@@ -59,7 +79,7 @@ h2,
 h3,
 h4 {
     font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     margin-top: 0;
 }
@@ -78,63 +98,55 @@ h4 {
     display: inline-block;
 }
 
-/* Highlighter Effect for Links */
+/* Highlighter Effect */
 .highlight-hover {
     position: relative;
     z-index: 1;
-    font-weight: 600;
-    transition: color 0.2s;
+    font-weight: 550;
+    transition: all 0.2s;
 }
 
 .highlight-hover::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -4px;
-    right: -4px;
-    height: 12px;
+    top: 60%;
+    left: -2px;
+    right: -2px;
+    height: 8px;
     background: var(--color-highlighter);
     z-index: -1;
-    transform: scaleX(0) skewX(-10deg);
+    transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     border-radius: 2px;
 }
 
 .highlight-hover:hover::before {
-    transform: scaleX(1) skewX(-10deg);
+    transform: scaleX(1);
 }
 
 /* --- Components --- */
 
-/* EDITORIAL CARD: Minimal layout, bold interaction */
 .card-editorial {
     position: relative;
     background: #fff;
     border: 1px solid #000;
-    padding: 0;
-    /* Image flush */
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    display: flex;
-    flex-direction: column;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: block;
     height: 100%;
 }
 
 .card-editorial:hover {
-    transform: translateY(-6px) rotate(0.5deg);
+    transform: translateY(-4px) rotate(0.5deg);
     box-shadow: var(--shadow-hard);
-    z-index: 10;
     border-color: #000;
+    z-index: 10;
 }
 
 .card-content {
-    padding: 24px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    padding: 20px;
 }
 
-/* "Sticker" Badge */
 .sticker-badge {
     display: inline-flex;
     padding: 4px 10px;
@@ -144,49 +156,38 @@ h4 {
     font-weight: 700;
     font-size: 11px;
     text-transform: uppercase;
-    border: 1px solid transparent;
     transform: rotate(-1deg);
 }
 
-/* Floating Resume Button - PILL STYLE (Small & unobtrusive) */
+/* Floating Resume Button */
 .floating-resume-button {
     position: fixed;
-    bottom: 30px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    /* Centered bottom dock feel */
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 6px;
-    border-radius: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.floating-resume-button:hover {
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.95);
 }
 
 .floating-resume-button a {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 20px;
-    background: #000;
+    padding: 8px 18px;
+    background: #0d0d0d;
     color: #fff;
     border-radius: 40px;
     font-weight: 600;
     font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 0.02em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
 }
 
-/* Legacy Support */
+.floating-resume-button a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    background: var(--color-electric);
+}
+
 .page-content-section {
     max-width: var(--content-width);
     margin: 0 auto;
