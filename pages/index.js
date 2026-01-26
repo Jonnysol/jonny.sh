@@ -18,9 +18,10 @@ const career = [
         role: "Vision Hardware Engineer",
         period: "2024 - Present",
         desc: [
-            "Sole DRI for Vision Pro automation labs.",
-            "Computer vision for flicker detection algorithms",
-            "Designed robots for Software/Hardware Stability testing"
+            "Sole DRI for Vision Pro automation labs (Cupertino/Boulder).",
+            "Designed robotic fixtures for high-precision validation.",
+            "Led HW/SW integration for special projects (Bash, C++, Python).",
+            "Drove stability testing at scale (flicker detection, signal integrity).",
         ],
         stack: ["Python", "Robotics", "CV", "Hardware"],
         logo: "/assets/img/icons/apple.png",
@@ -60,9 +61,10 @@ const career = [
         role: "Field Tech Lead",
         period: "2018 - 2023",
         desc: [
-            "Deployed IoT computer vision across DC.",
-            "98% defect detection accuracy.",
-            "Climbed actual towers (sometimes)."
+            "Deployed IoT computer vision (98% defect detection).",
+            "Automated testing via Python/LabVIEW (-40% manual time).",
+            "Designed test environments improving reliability by 30%.",
+            "Calibrated precision equipment (±0.1% accuracy)."
         ],
         stack: ["IoT", "Networking", "Field Ops"],
         logo: "/assets/img/icons/verizon.png",
@@ -70,15 +72,16 @@ const career = [
         color: "#fff"
     },
     {
-        company: "SpaceX",
-        role: "Flight Software (Sim)",
-        period: "2022",
+        company: "Universal Mind",
+        role: "Software Engineer Intern",
+        period: "2017",
         desc: [
-            "Optimized telemetry visualizers.",
-            "Collaborated on Starship landing sim tools."
+            "Assisted in development of mobile applications.",
+            "Collaborated with senior engineers on client projects.",
+            "Gained experience in agile development workflows."
         ],
-        stack: ["C++", "Python", "Simulation"],
-        logo: "/assets/img/icons/spacex.png",
+        stack: ["Mobile", "Agile", "Development"],
+        logo: "/assets/img/icons/universal_mind.png",
         showcase: "/assets/img/belt/photos4.jpeg",
         color: "#f0ffe6"
     }
@@ -86,6 +89,34 @@ const career = [
 
 // PHOTO-FIRST PROJECTS (Polaroid Style)
 const projects = [
+    {
+        title: "Time Capsule TV",
+        role: "Retro TV",
+        icon: "/assets/img/image.png",
+        link: "https://tv.jonny.sh",
+        desc: "Bring back the golden age of television.",
+        tag: "App",
+        rotate: 1.5,
+        sticker: "TRY ME ↙"
+    },
+    {
+        title: "Washington DC Electric Skateboarding",
+        role: "Community",
+        icon: "/assets/img/dcesk8_logo.png",
+        link: "https://dcesk8.com",
+        desc: "We ride electric skateboards fast.",
+        tag: "Vibe",
+        rotate: -1
+    },
+    {
+        title: "StreamGrid",
+        role: "Video Tool",
+        icon: "/assets/img/Streamgrid.png",
+        link: "https://jonnysol.github.io/StreamGrid/",
+        desc: "Monitor multiple streams in a single grid.",
+        tag: "Web",
+        rotate: -2
+    },
     {
         title: "JailTime.io",
         role: "Security Tool",
@@ -112,24 +143,6 @@ const projects = [
         desc: "1M+ event aggregation. It's watching you.",
         tag: "IoT",
         rotate: 3
-    },
-    {
-        title: "DCESK8",
-        role: "Community",
-        icon: "/assets/img/icons/dcesk8.png",
-        link: "https://dcesk8.com",
-        desc: "We ride electric skateboards fast.",
-        tag: "Vibe",
-        rotate: -1
-    },
-    {
-        title: "Nintendo (Mod)",
-        role: "Homebrew",
-        icon: "/assets/img/icons/gameboy.png",
-        link: "#",
-        desc: "Custom kernel patches for Switch.",
-        tag: "Hacking",
-        rotate: 2
     }
 ];
 
@@ -137,6 +150,9 @@ const projects = [
 
 const Marquee = () => (
     <div className="marquee-container">
+        <div className="walker-wrapper">
+            <img src="/assets/img/walkman.gif" alt="walking" className="walker" />
+        </div>
         <div className="marquee-content">
             <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
             <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
@@ -144,7 +160,7 @@ const Marquee = () => (
         <style jsx>{`
       .marquee-container {
         background: #000; color: var(--color-acid);
-        padding: 12px 0; overflow: hidden; white-space: nowrap;
+        padding: 12px 0; overflow: visible; white-space: nowrap;
         transform: rotate(-2deg) scale(1.05);
         border-top: 2px solid var(--color-acid);
         border-bottom: 2px solid var(--color-acid);
@@ -155,6 +171,30 @@ const Marquee = () => (
         display: inline-block;
         animation: scroll 20s linear infinite;
         font-family: 'Space Grotesk'; font-weight: 700; font-size: 24px;
+        overflow: hidden; /* Keep content clipped if needed, but container is visible for walker */
+      }
+      .walker-wrapper {
+        position: absolute;
+        top: -65px; /* Walking on top */
+        left: 0;
+        width: 100%;
+        height: 60px;
+        pointer-events: none;
+      }
+      .walker {
+        height: 60px;
+        position: absolute;
+        bottom: 0;
+        animation: walk-cycle 50s linear infinite;
+      }
+      @keyframes walk-cycle {
+        0% { left: -150px; transform: scaleX(1); }
+        40% { left: 105%; transform: scaleX(1); }   /* Walk to right (20s) */
+        40.001% { transform: scaleX(-1); }          /* Flip immediately */
+        46% { left: 105%; transform: scaleX(-1); }  /* Wait (3s) */
+        86% { left: -150px; transform: scaleX(-1); }/* Walk back (20s) */
+        86.001% { transform: scaleX(1); }           /* Reset flip */
+        100% { left: -150px; transform: scaleX(1); }/* Wait remaining time */
       }
       @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     `}</style>
@@ -373,6 +413,24 @@ export default function Home({ beltImages = [] }) {
                             Hardware at <span style={{ color: '#666' }}>Apple</span>. <br />
                             Everything else at <span className="marker-text">Night</span>.
                         </p>
+
+                        <div style={{ display: 'flex', gap: '15px', marginTop: '20px', alignItems: 'center' }}>
+                            <a href="https://linkedin.com/in/Jonsol" target="_blank" style={{ color: '#000' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" style={{ color: '#000' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                            </a>
+                            <a href="https://github.com/jonnysh" target="_blank" style={{ color: '#000' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" style={{ color: '#000' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            </a>
+                        </div>
+                        <div style={{ marginTop: '10px' }}>
+                            <a href="mailto:jon@jonny.sh" className="scribble-text" style={{ fontSize: '16px', color: '#555', textDecoration: 'none' }}>email me</a>
+                        </div>
                     </div>
                 </section>
 
@@ -385,6 +443,7 @@ export default function Home({ beltImages = [] }) {
                 {/* --- FOLDER TABS: EXPERIENCE --- */}
                 <section id="career" className="section container">
                     <h2 className="section-title"><span className="highlight-mark">SELECT FILES</span></h2>
+                    <p className="handwritten" style={{ marginTop: -5, marginLeft: 10, fontSize: 14, color: '#888', transform: 'rotate(-2deg)' }}>career outlook</p>
                     <FolderTabs />
                 </section>
 
@@ -441,6 +500,24 @@ export default function Home({ beltImages = [] }) {
                                 <div className="polaroid-caption">{p.title}</div>
                                 <div className="polaroid-doodads">{p.tag} • {p.role}</div>
                                 <div className="tape top-center" style={{ opacity: 0.5 }}></div>
+                                {p.sticker && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: -15,
+                                        right: -15,
+                                        background: '#ff0099',
+                                        color: '#fff',
+                                        padding: '4px 8px',
+                                        transform: 'rotate(15deg)',
+                                        border: '2px solid #000',
+                                        zIndex: 20,
+                                        boxShadow: '3px 3px 0 #000',
+                                        fontFamily: 'Permanent Marker',
+                                        fontSize: '12px'
+                                    }}>
+                                        {p.sticker}
+                                    </div>
+                                )}
                             </motion.a>
                         ))}
                     </div>
@@ -459,13 +536,13 @@ export default function Home({ beltImages = [] }) {
             </main>
 
             <footer className="footer">
-                <div className="scribble-text">Designed in Chaos. Built with Code.</div>
+                <div className="scribble-text">Designed in Chaos. Built with joy.</div>
                 <p>© {new Date().getFullYear()} Jonny.sh</p>
             </footer>
 
             {/* FLOATING ACTION BUTTON */}
             <a href="/resume.pdf" className="fab-resume">
-                grab_resume.pdf
+                grab_my_resume.pdf
             </a>
 
             <style jsx>{`
