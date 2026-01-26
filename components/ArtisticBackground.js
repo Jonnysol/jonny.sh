@@ -1,34 +1,13 @@
+import React from 'react';
+import HangingWire from './HangingWire';
 import { motion } from 'framer-motion';
 
 const ArtisticBackground = () => {
     return (
         <div className="artistic-layer">
             {/* --- HANGING WIRE (Top Right) --- */}
-            <svg
-                className="wire-hanging"
-                viewBox="0 0 200 400"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-            >
-                <motion.path
-                    d="M100,-20 C100,100 50,150 80,300 C90,350 40,380 60,420"
-                    stroke="rgba(0,0,0,0.8)"
-                    strokeWidth="2"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, ease: "easeInOut" }}
-                />
-                {/* Plug/End */}
-                <motion.rect
-                    x="50" y="410" width="20" height="30"
-                    fill="#000"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2, duration: 0.5 }}
-                />
-            </svg>
+            {/* Replaced hardcoded SVG with the new dynamic component */}
+            <HangingWire />
 
             {/* --- FLOOR WIRE (Bottom Left) --- */}
             <svg
@@ -73,14 +52,8 @@ const ArtisticBackground = () => {
           overflow: hidden;
         }
 
-        .wire-hanging {
-          position: absolute;
-          top: 0;
-          right: 5%;
-          width: 100px;
-          height: 40vh;
-          filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
-        }
+        /* Hanging Wire is now positioned inside its own component, 
+           but we ensure the container respects layout if needed */
 
         .wire-floor {
           position: absolute;
@@ -100,7 +73,6 @@ const ArtisticBackground = () => {
         }
 
         @media (max-width: 768px) {
-          .wire-hanging { right: -20px; width: 60px; }
           .wire-floor { width: 80vw; }
         }
       `}</style>

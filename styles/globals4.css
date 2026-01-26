@@ -167,7 +167,7 @@ h3 {
     position: absolute;
     width: 80px;
     height: 30px;
-    background: rgb(255 255 199 / 80%);
+    background: rgba(255, 255, 255, 0.6);
     border-left: 1px dashed rgba(0, 0, 0, 0.1);
     border-right: 1px dashed rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -187,8 +187,8 @@ h3 {
     transform: rotate(35deg);
 }
 
-.tape.corner-ar{
-    top: -50px;
+.tape.corner-tl {
+    top: -10px;
     left: -25px;
     transform: rotate(-35deg);
 }
@@ -313,11 +313,11 @@ h3 {
     border: 2px solid var(--color-acid);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     z-index: 10000;
-    transition: transform 0.9s;
+    transition: transform 0.2s;
 }
 
 .fab-resume:hover {
-    transform: translateX(-50%) scale(1.9) rotate(-2deg);
+    transform: translateX(-50%) scale(1.1) rotate(-2deg);
     background: var(--color-acid);
     color: #000;
     border-color: #000;
@@ -346,10 +346,10 @@ h3 {
     }
 }
 
-/*.wiggle-hover:hover {
-    animation: wiggle 0.4s linear(0 0%, 0.28 100%);
+.wiggle-hover:hover {
+    animation: wiggle 0.4s ease-in-out;
 }
-*/
+
 /* Keep smart badge support for a bit, but override */
 .smart-badge-grid {
     display: grid;

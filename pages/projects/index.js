@@ -8,7 +8,7 @@ export const config = {
 export default function Projects() {
   return (
     <>
-      <Head 
+      <Head
         title="Home"
       />
       <ul className="projectlist">

@@ -184,7 +184,20 @@ const FolderTabs = () => {
                     className="folder-inner"
                 >
                     <div className="fi-header">
-                        <img src={jobToImg(career[activeTab])} alt="logo" className="fi-logo paper-card" onError={(e) => e.target.style.display = 'none'} />
+                        <img
+                            src={jobToImg(career[activeTab])}
+                            alt="logo"
+                            style={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                background: '#fff',
+                                padding: '6px',
+                                border: '2px solid #000',
+                                borderRadius: '8px',
+                                boxShadow: '4px 4px 0 rgba(0,0,0,1)'
+                            }}
+                        />
                         <div>
                             <h3 className="fi-role marker-text">{career[activeTab].role}</h3>
                             <div className="fi-company">{career[activeTab].company} <span className="fi-period">{career[activeTab].period}</span></div>
@@ -211,6 +224,7 @@ const FolderTabs = () => {
                     </ul>
 
                     <div className="tape corner-tr"></div>
+                    <div className="tape corner-ar"></div>
                 </motion.div>
             </div>
         </div>
@@ -239,7 +253,7 @@ const Workbench = () => (
             ))}
         </div>
         <div className="scribble-note">
-            "Always be shipping."
+            &quot;Always be shipping.&quot;
         </div>
         <div className="tape corner-tl"></div>
     </div>
@@ -251,7 +265,31 @@ const jobToImg = (job) => {
     return job.logo || "/assets/img/icons/apple.png";
 };
 
-export default function Home() {
+export async function getStaticProps() {
+    const fs = require('fs');
+    const path = require('path');
+
+    const beltDir = path.join(process.cwd(), 'public/assets/img/belt');
+    let beltImages = [];
+
+    try {
+        const filenames = fs.readdirSync(beltDir);
+        beltImages = filenames.filter(file => {
+            const ext = path.extname(file).toLowerCase();
+            return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
+        }).map(file => `/assets/img/belt/${file}`);
+    } catch (e) {
+        console.error("Error reading belt directory:", e);
+    }
+
+    return {
+        props: {
+            beltImages
+        }
+    };
+}
+
+export default function Home({ beltImages = [] }) {
     return (
         <div className="main-wrapper">
             <HeadComponent title="Jonathan Solomon - FULL STACK CHAOS" />
@@ -262,7 +300,7 @@ export default function Home() {
                 {/* --- HERO: ID CARD STYLE --- */}
                 <section className="hero-section container">
                     <motion.div
-                        className="id-badge-container paper-card"
+                        className="badge-paper-card"
                         initial={{ rotate: -5, y: -100 }}
                         animate={{ rotate: -2, y: 0 }}
                         transition={{ type: "spring", damping: 12 }}
@@ -288,7 +326,7 @@ export default function Home() {
                     </motion.div>
 
                     <div className="hero-text-side">
-                        <h2 className="scribble-text" style={{ fontSize: 24, marginBottom: 20 }}>"I build robots & apps."</h2>
+                        <h2 className="scribble-text" style={{ fontSize: 24, marginBottom: 20 }}>&quot;I build robots & apps.&quot;</h2>
                         <p style={{ fontSize: 32, fontWeight: 800, lineHeight: 1.2 }}>
                             Hardware at <span style={{ color: '#666' }}>Apple</span>. <br />
                             Everything else at <span className="marker-text">Night</span>.
@@ -297,7 +335,7 @@ export default function Home() {
                 </section>
 
                 {/* --- INTERSECTING PHOTO BELTS (The "Twist") --- */}
-                <PhotoBeltTwist />
+                <PhotoBeltTwist images={beltImages} />
 
                 {/* --- MARQUEE --- */}
                 <Marquee />
@@ -399,23 +437,27 @@ export default function Home() {
             min-height: 60vh;
         }
         
-        .id-badge-container {
-            width: 280px; /* Smaller ID Badge */
-            background: #fff;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            transform-origin: top center;
+        
+        /* REVERTED ID BADGE (Original Size) */
+        /* Replaced by .badge-paper-card in globals.css */
+        
+        .id-photo { width: 100%; border: 2px solid #000; display: block; }
+        .id-photo img { width: 100%; height: auto; display: block; transition: filter 0.2s; } 
+        
+        .id-info h1 { 
+            font-size: 24px; 
+            font-weight: 800;
+            line-height: 1; 
+            border-bottom: 2px solid #000; 
+            padding-bottom: 10px; 
+            margin-bottom: 10px; 
+            text-transform: uppercase;
         }
-        
-        .id-photo img { width: 100%; border: 2px solid #000; transition: filter 0.2s; } /* No Grayscale */
-        .id-badge-container:hover .id-photo img { }
-        
-        .id-info h1 { font-size: 24px; line-height: 1; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
         .id-role { font-family: 'Space Grotesk'; font-weight: 700; font-size: 18px; }
         .id-barcode { font-family: 'Libre Barcode 39', cursive; font-size: 30px; letter-spacing: -2px; margin-top: auto; opacity: 0.5; }
         
+        .scribble-doodle svg { width: 100px; height: 100px; }
+
         .hero-text-side { max-width: 400px; }
         .hero-text-side p { font-size: 24px; line-height: 1.4; }
         
@@ -423,7 +465,20 @@ export default function Home() {
         
         /* EXP */
         .fi-header { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
-        .fi-logo { width: 40px; height: 40px; object-fit: contain; background: #fff; padding: 6px; border: 2px solid #000; border-radius: 8px; }
+        
+        /* STRICT LOGO CONSTRAINT */
+        .constrained-logo { 
+            width: 40px !important; 
+            height: 40px !important; 
+            min-width: 40px !important; 
+            max-width: 40px !important;
+            object-fit: contain; 
+            background: #fff; 
+            padding: 6px; 
+            border: 2px solid #000; 
+            border-radius: 6px; 
+            box-shadow: 2px 2px 0 rgba(0,0,0,1); 
+        }
         .fi-role { font-size: 32px; margin: 0; line-height: 1; }
         .fi-company { font-size: 20px; font-weight: 600; }
         .fi-list { list-style: none; padding: 0; font-size: 18px; line-height: 1.6; }

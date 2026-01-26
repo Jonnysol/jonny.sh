@@ -1,38 +1,32 @@
 import React from 'react';
 import styles from './PhotoBelt.module.css';
 
-const imagesRow1 = [
-    '/assets/img/belt/photos1.jpeg',
-    '/assets/img/belt/photos2.jpeg',
-    '/assets/img/belt/photos3.jpeg',
-    '/assets/img/belt/photos4.jpeg',
-    '/assets/img/photo1.jpg',
-    '/assets/img/photo2.jpg',
-];
-
-const imagesRow2 = [
-    '/assets/img/belt/photos5.jpeg',
-    '/assets/img/belt/photos6.jpeg',
-    '/assets/img/belt/photos7.jpeg',
-    '/assets/img/belt/photos8.jpeg',
-    '/assets/img/photo3.jpg',
-    '/assets/img/photo4.jpg',
-];
-
 const MarqueeStrip = () => (
     <div className={styles.marqueeStrip}>
-        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • ROLLER COASTER • </span>
-        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • ROLLER COASTER • </span>
+        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
+        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
     </div>
 );
 
-const PhotoBeltTwist = () => {
+const PhotoBeltTwist = ({ images = [] }) => {
+    // If no images, provide default or empty to prevent crash
+    const safeImages = images.length > 0 ? images : [];
+
+    // Split images into two rows for the twist effect
+    const midPoint = Math.ceil(safeImages.length / 2);
+    const row1 = safeImages.slice(0, midPoint);
+    const row2 = safeImages.slice(midPoint);
+
+    // Duplicate logic for infinite scroll illusion (concat)
+    const track1 = [...row1, ...row1, ...row1]; // 3x for safety
+    const track2 = [...row2, ...row2, ...row2];
+
     return (
         <div className={styles.twistWrapper}>
             {/* Belt 1: Top Layer (Acid Green) */}
             <div className={`${styles.belt} ${styles.beltOne}`}>
                 <div className={styles.track}>
-                    {imagesRow1.concat(imagesRow1).map((src, i) => (
+                    {track1.map((src, i) => (
                         <div className={styles.card} key={`r1-${i}`}>
                             <img src={src} alt="Project" onError={(e) => e.target.style.background = '#ccc'} />
                         </div>
@@ -48,7 +42,7 @@ const PhotoBeltTwist = () => {
             {/* Belt 2: Bottom Layer (Steeper, Black) */}
             <div className={`${styles.belt} ${styles.beltTwo}`}>
                 <div className={styles.trackReverse}>
-                    {imagesRow2.concat(imagesRow2).map((src, i) => (
+                    {track2.map((src, i) => (
                         <div className={`${styles.card} ${styles.cardAlt}`} key={`r2-${i}`}>
                             <img src={src} alt="Project" onError={(e) => e.target.style.background = '#333'} />
                         </div>
