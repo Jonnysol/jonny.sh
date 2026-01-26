@@ -24,7 +24,7 @@ const career = [
         ],
         stack: ["Python", "Robotics", "CV", "Hardware"],
         logo: "/assets/img/icons/apple.png",
-        showcase: "/assets/img/belt/photos1.jpeg",
+        showcase: "/assets/img/apple_showcase.jpg",
         color: "#fafafa"
     },
     {
@@ -44,10 +44,10 @@ const career = [
     {
         company: "DCESK8",
         role: "Community Lead",
-        period: "2018 - Present",
+        period: "2017 - 2023",
         desc: [
-            "We ride electric skateboards fast.",
-            "Organized 100+ grouped rides in DC.",
+            "We build electric Mobility devices and charge maps",
+            "Organized 3000+ members in DC with classes and events.",
             "Advocating for PEV safety & rights."
         ],
         stack: ["Community", "Events", "PEV"],
@@ -138,14 +138,14 @@ const projects = [
 const Marquee = () => (
     <div className="marquee-container">
         <div className="marquee-content">
-            <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
-            <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
+            <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
+            <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
         </div>
         <style jsx>{`
       .marquee-container {
         background: #000; color: var(--color-acid);
         padding: 12px 0; overflow: hidden; white-space: nowrap;
-        transform: rotate(-1deg) scale(1.05);
+        transform: rotate(-2deg) scale(1.05);
         border-top: 2px solid var(--color-acid);
         border-bottom: 2px solid var(--color-acid);
         margin: 40px 0;
@@ -245,9 +245,8 @@ const FolderTabs = () => {
                                         background: '#000',
                                         border: '2px solid #000',
                                         boxShadow: '8px 8px 0 rgba(0,0,0,0.1)',
-                                        overflow: 'hidden',
                                         position: 'relative',
-                                        transform: 'rotate(1deg)'
+                                        transform: 'rotate(3deg)'
                                     }}
                                 >
                                     <img
@@ -255,15 +254,20 @@ const FolderTabs = () => {
                                         alt="Showcase"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
-                                    <div className="tape top-center" style={{ width: '80px', height: '25px', background: 'rgba(255,255,255,0.4)', position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)' }}></div>
+                                    {/* Tape on Corners */}
+                                    <div className="tape" style={{ top: -12, left: -25, transform: "rotate(-35deg)" }}></div>
+                                    <div className="tape" style={{ top: -12, right: -25, transform: "rotate(35deg)" }}></div>
+                                    <div className="tape" style={{ bottom: -12, left: -25, transform: "rotate(35deg)" }}></div>
+                                    <div className="tape" style={{ bottom: -12, right: -25, transform: "rotate(-35deg)" }}></div>
                                 </motion.div>
                             </div>
                         )}
                     </div>
 
-                    <div className="tape corner-tr"></div>
-                    <div className="tape corner-ar"></div>
+
                 </motion.div>
+                <div className="tape corner-tr"></div>
+                <div className="tape corner-tl"></div>
             </div>
         </div>
     );
@@ -402,7 +406,7 @@ export default function Home({ beltImages = [] }) {
                         </div>
                         <div className="torn-paper">
                             <p className="handwritten" style={{ fontSize: 14, margin: 0 }}>
-                                Check out checks!
+                                let me tell you about it!
                                 <br />
                                 --{'>'} Substack
                             </p>
@@ -444,7 +448,7 @@ export default function Home({ beltImages = [] }) {
 
                 {/* --- NEWSLETTER RIP --- */}
                 <section className="section container" style={{ marginBottom: 100 }}>
-                    <a href="https://jonny.substack.com/" target="_blank" className="newsletter-rip wiggle-hover">
+                    <a href="https://jonnysowl.substack.com/" target="_blank" className="newsletter-rip wiggle-hover">
                         <div className="rip-edge"></div>
                         <h3>READ MY MIND -{'>'}</h3>
                         <p>Engineering musings & late night thoughts.</p>
@@ -617,7 +621,7 @@ export default function Home({ beltImages = [] }) {
         .newsletter-rip:hover { transform: rotate(0deg) scale(1.02); box-shadow: 5px 5px 0 #ccff00; }
         .newsletter-rip h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
         .rip-edge {
-            position: absolute; top: -10px; left: 0; width: 100%; height: 10px;
+            position: absolute; top: -10px; left: 0; width: 100%; height: 30px;
             background-image: linear-gradient(45deg, transparent 50%, #fff 50%), linear-gradient(-45deg, transparent 50%, #fff 50%);
             background-size: 20px 20px;
             transform: rotate(180deg);

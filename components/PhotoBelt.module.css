@@ -55,14 +55,14 @@
 .track {
    display: flex;
    gap: 20px;
-   animation: scroll 30s linear infinite;
+   animation: scroll 70s linear infinite;
    padding-left: 20px;
 }
 
 .trackReverse {
    display: flex;
    gap: 20px;
-   animation: scrollReverse 25s linear infinite;
+   animation: scrollReverse 355s linear infinite;
    /* Faster/Slower */
    padding-left: 20px;
 }
