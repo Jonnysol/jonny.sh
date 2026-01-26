@@ -19,11 +19,12 @@ const career = [
         period: "2024 - Present",
         desc: [
             "Sole DRI for Vision Pro automation labs.",
-            "Building the robots that test the future.",
-            "Reduced cycle time by 400% via Python pipelines."
+            "Computer vision for flicker detection algorithms",
+            "Designed robots for Software/Hardware Stability testing"
         ],
         stack: ["Python", "Robotics", "CV", "Hardware"],
         logo: "/assets/img/icons/apple.png",
+        showcase: "/assets/img/belt/photos1.jpeg",
         color: "#fafafa"
     },
     {
@@ -37,32 +38,22 @@ const career = [
         ],
         stack: ["Typescript", "LLMs", "Swift", "Next.js"],
         logo: "/assets/img/icons/playroom.png",
+        showcase: "/assets/img/belt/photos2.jpeg",
         color: "#fff0f5"
     },
     {
-        company: "Teenage Engineering",
-        role: "Design Prototypes (Concept)",
-        period: "2023",
+        company: "DCESK8",
+        role: "Community Lead",
+        period: "2018 - Present",
         desc: [
-            "Explored tangible interfaces for synth control.",
-            "Wrote C++ firmware for knob velocity handling.",
-            "*Love letter project / Unofficial."
+            "We ride electric skateboards fast.",
+            "Organized 100+ grouped rides in DC.",
+            "Advocating for PEV safety & rights."
         ],
-        stack: ["C++", "Embedded", "Industrial Design"],
-        logo: "/assets/img/icons/teenage.png",
+        stack: ["Community", "Events", "PEV"],
+        logo: "/assets/img/icons/dcesk8.png",
+        showcase: "/assets/img/belt/IMG_2180.jpg",
         color: "#e6f0ff"
-    },
-    {
-        company: "SpaceX",
-        role: "Flight Software (Sim)",
-        period: "2022",
-        desc: [
-            "Optimized telemetry visualizers.",
-            "Collaborated on Starship landing sim tools."
-        ],
-        stack: ["C++", "Python", "Simulation"],
-        logo: "/assets/img/icons/spacex.png",
-        color: "#f0ffe6"
     },
     {
         company: "Verizon",
@@ -75,7 +66,21 @@ const career = [
         ],
         stack: ["IoT", "Networking", "Field Ops"],
         logo: "/assets/img/icons/verizon.png",
+        showcase: "/assets/img/belt/photos3.jpeg",
         color: "#fff"
+    },
+    {
+        company: "SpaceX",
+        role: "Flight Software (Sim)",
+        period: "2022",
+        desc: [
+            "Optimized telemetry visualizers.",
+            "Collaborated on Starship landing sim tools."
+        ],
+        stack: ["C++", "Python", "Simulation"],
+        logo: "/assets/img/icons/spacex.png",
+        showcase: "/assets/img/belt/photos4.jpeg",
+        color: "#f0ffe6"
     }
 ];
 
@@ -183,45 +188,78 @@ const FolderTabs = () => {
                     transition={{ type: "spring", bounce: 0.5 }}
                     className="folder-inner"
                 >
-                    <div className="fi-header">
-                        <img
-                            src={jobToImg(career[activeTab])}
-                            alt="logo"
-                            style={{
-                                width: '40px',
-                                height: '40px',
-                                objectFit: 'contain',
-                                background: '#fff',
-                                padding: '6px',
-                                border: '2px solid #000',
-                                borderRadius: '8px',
-                                boxShadow: '4px 4px 0 rgba(0,0,0,1)'
-                            }}
-                        />
-                        <div>
-                            <h3 className="fi-role marker-text">{career[activeTab].role}</h3>
-                            <div className="fi-company">{career[activeTab].company} <span className="fi-period">{career[activeTab].period}</span></div>
+                    <div className="fi-layout" style={{ display: 'flex', gap: '30px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                        {/* LEFT: CONTENT */}
+                        <div className="fi-content" style={{ flex: '1', minWidth: '300px' }}>
+                            <div className="fi-header">
+                                <img
+                                    src={jobToImg(career[activeTab])}
+                                    alt="logo"
+                                    style={{
+                                        width: '48px',
+                                        height: '48px',
+                                        objectFit: 'contain',
+                                        background: '#fff',
+                                        padding: '6px',
+                                        border: '2px solid #000',
+                                        borderRadius: '8px',
+                                        boxShadow: '4px 4px 0 rgba(0,0,0,1)'
+                                    }}
+                                />
+                                <div>
+                                    <h3 className="fi-role marker-text">{career[activeTab].role}</h3>
+                                    <div className="fi-company">{career[activeTab].company} <span className="fi-period">{career[activeTab].period}</span></div>
+                                </div>
+                            </div>
+
+                            <div className="fi-stack">
+                                {career[activeTab].stack?.map((tech, i) => (
+                                    <span key={i} className="tech-sticker">{tech}</span>
+                                ))}
+                            </div>
+
+                            <ul className="fi-list">
+                                {career[activeTab].desc.map((d, i) => (
+                                    <motion.li
+                                        key={i}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.1 }}
+                                    >
+                                        {d}
+                                    </motion.li>
+                                ))}
+                            </ul>
                         </div>
-                    </div>
 
-                    <div className="fi-stack">
-                        {career[activeTab].stack?.map((tech, i) => (
-                            <span key={i} className="tech-sticker">{tech}</span>
-                        ))}
+                        {/* RIGHT: SHOWCASE IMAGE */}
+                        {career[activeTab].showcase && (
+                            <div className="fi-showcase" style={{ flex: '0 0 320px' }}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.2 }}
+                                    style={{
+                                        width: '100%',
+                                        height: '240px',
+                                        background: '#000',
+                                        border: '2px solid #000',
+                                        boxShadow: '8px 8px 0 rgba(0,0,0,0.1)',
+                                        overflow: 'hidden',
+                                        position: 'relative',
+                                        transform: 'rotate(1deg)'
+                                    }}
+                                >
+                                    <img
+                                        src={career[activeTab].showcase}
+                                        alt="Showcase"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                    <div className="tape top-center" style={{ width: '80px', height: '25px', background: 'rgba(255,255,255,0.4)', position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)' }}></div>
+                                </motion.div>
+                            </div>
+                        )}
                     </div>
-
-                    <ul className="fi-list">
-                        {career[activeTab].desc.map((d, i) => (
-                            <motion.li
-                                key={i}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                            >
-                                {d}
-                            </motion.li>
-                        ))}
-                    </ul>
 
                     <div className="tape corner-tr"></div>
                     <div className="tape corner-ar"></div>
@@ -422,7 +460,7 @@ export default function Home({ beltImages = [] }) {
             </footer>
 
             {/* FLOATING ACTION BUTTON */}
-            <a href="/resume.pdf" className="fab-resume wiggle-hover">
+            <a href="/resume.pdf" className="fab-resume">
                 grab_resume.pdf
             </a>
 

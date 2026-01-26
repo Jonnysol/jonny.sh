@@ -3,19 +3,29 @@ import styles from './PhotoBelt.module.css';
 
 const MarqueeStrip = () => (
     <div className={styles.marqueeStrip}>
-        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
-        <span>ROBOTICS • AUTOMATION • TYPESCRIPT • RUST • NEXT.JS • HARDWARE • SCALING • </span>
+        <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
+        <span>ROBOTICS • AUTOMATION • ANSIBLE • KUBERNETES • BASH • HARDWARE • SCALING • PYTHON • COMPUTER VISION • SLAM • ROS • </span>
     </div>
 );
 
 const PhotoBeltTwist = ({ images = [] }) => {
-    // If no images, provide default or empty to prevent crash
-    const safeImages = images.length > 0 ? images : [];
+    // Shuffle images to randomize placement
+    const shuffledImages = React.useMemo(() => {
+        const arr = [...images];
+        // Fisher-Yates shuffle
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }, [images]);
 
-    // Split images into two rows for the twist effect
-    const midPoint = Math.ceil(safeImages.length / 2);
-    const row1 = safeImages.slice(0, midPoint);
-    const row2 = safeImages.slice(midPoint);
+    // If no images, provide default or empty to prevent crash
+    const safeImages = shuffledImages.length > 0 ? shuffledImages : [];
+
+    // Both rows get ALL images, but Row 2 is reversed (starts from end)
+    const row1 = safeImages;
+    const row2 = [...safeImages].reverse();
 
     // Duplicate logic for infinite scroll illusion (concat)
     const track1 = [...row1, ...row1, ...row1]; // 3x for safety
