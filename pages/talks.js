@@ -13,20 +13,28 @@ export default function Talks() {
       />
       <ul className="projectlist">
         <li>
-          <h4><Link href="https://github.com/asadm/insult-bot-tutorial">Building a Bot - Facebook Developer Circle Meetup 1 (2016)</Link></h4>
-          <p>Slides and code from my bot-making talk at DevCircle Meetup in Karachi.</p>
+          <h4>SkillsUSA National Gold Medalist - IoT Smart Home Networks (2023)</h4>
+          <p>Achieved national gold medal recognition in IoT and Edge Computing, demonstrating expertise in smart home network design, sensor integration, and edge computing solutions. Recognized by U.S. Senator Mark Warner (D-VA) for technical excellence.</p>
         </li>
         <li>
-          <h4><Link href="https://github.com/asadm/devfest16/">Machine Learning - DevFest Karachi (2016)</Link></h4>
-          <p>Resources from my ML talk at DevFest Karachi.</p>
+          <h4>Physics Congress - Electric Mobility Research Exhibition (2022)</h4>
+          <p>Presented research on electric mobility solutions and sustainable transportation technology. Received honorable mention for technical research exhibition focusing on electric drivetrain optimization and battery management systems.</p>
         </li>
         <li>
-          <h4><Link href="https://github.com/asadm/deeplearning-workshop/">Deep Learning School (2016)</Link></h4>
-          <p>A workshop series on Deep Learning focused on programmers.</p>
+          <h4>NVCC Campus Events - STEM Campaign Leadership</h4>
+          <p>As Campus Events coordinator, created captivating engineering and STEM campaigns that successfully promoted campus-wide events and initiatives. Led technology implementation including Student CRMs, Event AV systems, and automated marketing solutions.</p>
         </li>
         <li>
-          <h4><Link href="https://docs.google.com/presentation/d/1zrv662BkjIUO6rnT3JODf-2GYoQ2EDwewxjE-FXg03E/edit?usp=sharing">Why Node.js (2016)</Link> (<Link href="files/whynodejs.pdf">pdf</Link>)</h4>
-          <p>A very brief overview of Node.js.</p>
+          <h4>Society of Physics Students - Presidential Leadership (2021-2023)</h4>
+          <p>As President of SPS/NOVASytemic, motivated 1000+ students to innovate, create, and lead. Organized the largest college-wide hackathon and led intercollegiate teams to win gold at national championships. Focused on inspiring students to see the joy in engineering and creating solutions for people.</p>
+        </li>
+        <li>
+          <h4>White House Young Leaders Summit</h4>
+          <p>Honored to participate in the Presidential Young Leaders Summit at The White House, representing excellence in STEM education and community leadership.</p>
+        </li>
+        <li>
+          <h4>American Institute of Physics - Physcon Award</h4>
+          <p>Received recognition from the American Institute of Physics for contributions to electric mobility research and sustainable transportation solutions.</p>
         </li>
       </ul>
     </>
