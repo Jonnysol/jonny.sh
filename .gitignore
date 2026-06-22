@@ -3,3 +3,6 @@ vault-plaintext.txt
 *.secret.txt
 .DS_Store
 .claude/
+
+# Work-in-progress project pages — kept private, not published
+drafts/
