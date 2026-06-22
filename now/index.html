@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now — Jonathan Solomon</title>
+    <meta name="description" content="What Jonathan Solomon is doing now.">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script>
+        function setThemeIcon() {
+            const themeIcon = document.getElementById('theme-icon');
+            const themeToggle = document.getElementById('theme-toggle');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.textContent = '🌙';
+                themeToggle.setAttribute('aria-label', 'Switch to light mode');
+            } else {
+                themeIcon.textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+            }
+        }
+        if (localStorage.getItem('theme') === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+        document.addEventListener('DOMContentLoaded', setThemeIcon);
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            setThemeIcon();
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <h1 class="site-title"><a href="/">Jonathan Solomon</a></h1>
+            <p class="site-subtitle">
+                    / Now
+            </p>
+        </div>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/now/">Now</a></li>
+                <li><a href="/about/">About</a></li>
+                <li>
+                    <button id="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+                        <span id="theme-icon" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+<article class="page-container">
+    <div class="page-content">
+        <h1 class="section-title">Now</h1>
+        <div class="page-body">
+            <ul>
+                <li>Living in <strong>Your City</strong> 🌍</li>
+                <li><strong>Work</strong>:
+                    <ul><li>Your role at Your Company</li></ul>
+                </li>
+                <li><strong>Projects</strong>:
+                    <ul><li>Something you're building</li></ul>
+                </li>
+                <li><strong>Reading</strong>:
+                    <ul><li>The book on your nightstand</li></ul>
+                </li>
+            </ul>
+            <p>Last updated 22/Jun/2026</p>
+        </div>
+    </div>
+</article>
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            © 2026 -
+                <a href="#" rel="me">LinkedIn</a> |
+                <a href="#" rel="me">X</a> |
+                <a href="#" rel="me">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Jonathan Solomon</title>
+    <meta name="description" content="About Jonathan Solomon.">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script>
+        function setThemeIcon() {
+            const themeIcon = document.getElementById('theme-icon');
+            const themeToggle = document.getElementById('theme-toggle');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.textContent = '🌙';
+                themeToggle.setAttribute('aria-label', 'Switch to light mode');
+            } else {
+                themeIcon.textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+            }
+        }
+        if (localStorage.getItem('theme') === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+        document.addEventListener('DOMContentLoaded', setThemeIcon);
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            setThemeIcon();
+        }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <h1 class="site-title"><a href="/">Jonathan Solomon</a></h1>
+            <p class="site-subtitle">
+                    / About
+            </p>
+        </div>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/now/">Now</a></li>
+                <li><a href="/about/">About</a></li>
+                <li>
+                    <button id="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+                        <span id="theme-icon" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+<article class="page-container">
+  <div class="page-content">
+    <h1 class="section-title">About</h1>
+    <div id="about-content">
+      <div class="about-depth-control">
+        <div class="slider-legend">How much do you want to know?</div>
+        <div class="custom-slider-container">
+          <input type="range" class="custom-slider" id="info-slider" min="1" max="4" step="1" value="2"
+            aria-label="Choose how much to show about me">
+        </div>
+        <div class="slider-steps" aria-hidden="true">
+          <span class="slider-step" data-step="1">TLDR</span>
+          <span class="slider-step is-active" data-step="2">Brief</span>
+          <span class="slider-step" data-step="3">Detailed</span>
+          <span class="slider-step" data-step="4">I have time...</span>
+        </div>
+      </div>
+      <div class="about-summary content-level page-body minimal" data-level="minimal" style="display: none;">
+        <p>👋 → 🛠️ → ✍️ → 🚀</p>
+      </div>
+      <div class="about-summary content-level page-body" data-level="short">
+        <p>My name is Jonathan Solomon. One or two sentences: who you are and what you do.</p>
+      </div>
+      <div class="about-medium content-level page-body" data-level="medium" style="display: none;">
+        <p>A few short paragraphs. Your background, what you're into, and the through-line of your work.</p>
+        <p>Add a second paragraph with a project or two you care about.</p>
+        <p>And a third to round it out.</p>
+      </div>
+      <div class="about-long content-level page-body" data-level="long" style="display: none;">
+        <p>The full story. Where you grew up, how you got into your field, the turning points, the people, the lessons.</p>
+        <p>Keep going as long as you like — this level is for the readers who chose "I have time..."</p>
+        <p>Close with where you're headed next.</p>
+      </div>
+    </div>
+  </div>
+  <script defer src="/static/js/about-depth.js"></script>
+</article>
+    </main>
+
+    <footer class="site-footer">
+        <p>
+            © 2026 -
+                <a href="#" rel="me">LinkedIn</a> |
+                <a href="#" rel="me">X</a> |
+                <a href="#" rel="me">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>
