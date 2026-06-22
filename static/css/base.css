@@ -818,64 +818,7 @@ pre code {
   overflow-x: auto;
 }
 
-#townsquare-root#townsquare-root {
-  --scene: rgb(250, 250, 249);
-  --page: rgb(250, 250, 249);
-  --surface: #fdf8f4;
-  --ink: #2a2926;
-  --you: #c8641f;
-  --tree-trunk: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-  --tree-canopy: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-  --other: #26241f;
-  --ground: rgba(42, 41, 38, 0.16);
-  --scene-edge: color-mix(in oklab, var(--scene) 88%, var(--page) 12%);
-  --you-deep: var(--you);
-  --text: var(--ink);
-  --muted: var(--ink);
-}
 
-#townsquare-root#townsquare-root[data-townsquare-theme=dark] {
-  --scene: rgb(16, 15, 15);
-  --page: rgb(16, 15, 15);
-  --surface: #24231f;
-  --ink: #f2eee6;
-  --you: #df8a43;
-  --tree-trunk: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-  --tree-canopy: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-  --other: #ddd7cc;
-  --ground: rgba(242, 238, 230, 0.18);
-  --scene-edge: color-mix(in oklab, var(--scene) 88%, var(--page) 12%);
-  --you-deep: var(--you);
-  --text: var(--ink);
-  --muted: var(--ink);
-}
-
-@media (prefers-color-scheme: dark) {
-  #townsquare-root#townsquare-root:is(:not([data-townsquare-theme]), [data-townsquare-theme=auto]) {
-    --scene: transparent;
-    --page: transparent;
-    --surface: #24231f;
-    --ink: #f2eee6;
-    --you: #df8a43;
-    --tree-trunk: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-    --tree-canopy: color-mix(in oklab, var(--text) 58%, var(--muted) 42%);
-    --other: #ddd7cc;
-    --ground: rgba(242, 238, 230, 0.18);
-    --scene-edge: color-mix(in oklab, var(--scene) 88%, var(--page) 12%);
-    --you-deep: var(--you);
-    --text: var(--ink);
-    --muted: var(--ink);
-  }
-}
-#townsquare-root#townsquare-root .townsquare__stage {
-  background: linear-gradient(180deg, var(--scene) 0%, var(--scene) 72%, var(--scene-edge) 72%, var(--page) 72.4%, var(--page) 100%);
-}
-
-#townsquare-root#townsquare-root .townsquare__ground {
-  background: var(--ground);
-}
-
-/*# sourceMappingURL=base.css.map */
 
 /* ============================================================
    ∞ gate — the secret "full story" unlock
@@ -1066,8 +1009,8 @@ pre code {
    TownSquare customization layer
    ============================================================ */
 #townsquare-root#townsquare-root {
-  --scene: #f0f0f0;
-  --page: #bfbfbf;
+  --scene: rgb(250, 250, 249);
+  --page: rgb(250, 250, 249);
   --surface: #fcfcfc;
   --ink: #2a2926;
   --you: #c8641f;
@@ -1081,8 +1024,8 @@ pre code {
   --muted: var(--ink);
 }
 #townsquare-root#townsquare-root[data-townsquare-theme="dark"] {
-  --scene: #242521;
-  --page: #181917;
+  --scene: rgb(16, 15, 15);
+  --page: rgb(16, 15, 15);
   --surface: #24231f;
   --ink: #f2eee6;
   --you: #df8a43;
@@ -1097,8 +1040,8 @@ pre code {
 }
 @media (prefers-color-scheme: dark) {
   #townsquare-root#townsquare-root[data-townsquare-theme="auto"] {
-  --scene: #242521;
-  --page: #181917;
+  --scene: rgb(16, 15, 15);
+  --page: rgb(16, 15, 15);
   --surface: #24231f;
   --ink: #f2eee6;
   --you: #df8a43;
@@ -1126,34 +1069,5 @@ pre code {
   background: var(--ground);
 }
 
-/* tiny em-dash homage callout, on the right of the About box */
-#about-content { position: relative; }
-.em-dash-note {
-  position: absolute;
-  top: 0.1rem;
-  right: -0.3rem;
-  transform: rotate(2.5deg);
-  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  font-size: 0.6rem;
-  line-height: 1.25;
-  letter-spacing: 0.01em;
-  font-style: italic;
-  color: #b0a99e;
-  text-align: right;
-  max-width: 8.5rem;
-  opacity: 0.85;
-  pointer-events: none;
-  z-index: 2;
-}
-.em-dash-note .hash { color: #c8641f; font-style: normal; font-weight: 600; }
-.dark .em-dash-note { color: #746f66; }
-@media (max-width: 860px) {
-  .em-dash-note {
-    position: static;
-    transform: none;
-    display: block;
-    text-align: right;
-    max-width: none;
-    margin: 0 0 0.4rem;
-  }
-}
+/* TownSquare: floor sits at the bottom (remove reserved dead space) */
+#townsquare-root#townsquare-root .townsquare { min-height: 0 !important; }

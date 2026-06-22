@@ -3,7 +3,7 @@ const greetingEl = document.getElementById('intro-greeting');
 if (greetingEl) {
   const greetings = [
     'Hi',       // English
-    'ሰላም እንዴት ናችሁ', // Amharic — "selam, endet nachihu?" (hello, how are you all?)
+    'ሰላም',     // Amharic (selam)
     'Olá',      // Portuguese
     'Hola',     // Spanish
     '你好',      // Mandarin Chinese
