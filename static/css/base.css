@@ -1125,3 +1125,35 @@ pre code {
 #townsquare-root#townsquare-root .townsquare__ground {
   background: var(--ground);
 }
+
+/* tiny em-dash homage callout, on the right of the About box */
+#about-content { position: relative; }
+.em-dash-note {
+  position: absolute;
+  top: 0.1rem;
+  right: -0.3rem;
+  transform: rotate(2.5deg);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.6rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-style: italic;
+  color: #b0a99e;
+  text-align: right;
+  max-width: 8.5rem;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 2;
+}
+.em-dash-note .hash { color: #c8641f; font-style: normal; font-weight: 600; }
+.dark .em-dash-note { color: #746f66; }
+@media (max-width: 860px) {
+  .em-dash-note {
+    position: static;
+    transform: none;
+    display: block;
+    text-align: right;
+    max-width: none;
+    margin: 0 0 0.4rem;
+  }
+}
