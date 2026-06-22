@@ -1,8 +1,13 @@
 # jonny.sh
 
 Personal site for Jonathan Solomon. Plain static HTML/CSS/JS — no build step.
-Deployed to <https://jonny.sh> via GitHub Actions (`.github/workflows/publish.yml`)
-on every push to `master`.
+Deployed to <https://jonny.sh> straight from the `master` branch via GitHub
+Pages (Settings → Pages → "Deploy from a branch: master /root"). Every push to
+`master` auto-deploys in ~1 min.
+
+> Note: this repo is a fork, and GitHub disables push-triggered Actions on forks
+> — so branch-based Pages deploy (which still runs on forks) is used instead of a
+> custom workflow. To use a custom GitHub Action instead, detach the fork first.
 
 ## Structure
 - `index.html` — home (intro, About depth-slider, "Stuff I'm proud of")
