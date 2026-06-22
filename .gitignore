@@ -1,0 +1,5 @@
+# Never commit the vault's plaintext
+vault-plaintext.txt
+*.secret.txt
+.DS_Store
+.claude/
