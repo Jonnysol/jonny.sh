@@ -73,6 +73,10 @@
                 <span>I'm Jonathan Solomon. <span class="hand-icon">👋</span></span>
             </p>
             <p>I build software for the parts of computing that touch the real world — robotic test labs at Apple, screen-aware AI at Clicky, and Prism Labs, an ambient OS for physical space. This site is where I keep the work: what I'm building <a href="/now/">now</a>, the stuff I'm proud of below, and the longer version <a href="/about/">about here</a>.</p>
+            <p class="vault-top">
+                <button type="button" class="vault-lock-btn vault-trigger" aria-label="Unlock the full story">🔒</button>
+                <span class="vault-top-label">there's a fuller story behind the lock</span>
+            </p>
         </section>
     </section>
 
@@ -110,8 +114,7 @@
                 <p>Now I'm a founding engineer at Clicky, building a screen-aware AI assistant for Mac — guided visual annotations, hands-free browser control, the plumbing that lets an agent see context and actually act on it. The bet: the interface after chat is visual, spatial, and able to do things.</p>
                 <p>And I'm building Prism Labs — an ambient operating system for physical space. A ceiling unit that understands a room and projects a real, usable interface onto the surfaces already in it. No headset, no glass in your hand. Smart homes failed because they automated light switches; Prism starts by understanding the space.</p>
                 <p>I keep ending up where cameras, robots, AI, and weird rooms collide. That's the place I want to be.</p>
-                <p style="margin-top:1.4rem; color:#777;">Want the full, full, full version? It's behind the&nbsp;<span class="infinity-gate" id="infinity-gate" role="button" tabindex="0" aria-label="Unlock the full story" hidden>∞</span>&nbsp;— and it's locked.</p>
-                <div class="vault-output" id="vault-output" hidden></div>
+                <p style="margin-top:1.4rem; color:#777;">Want the full, full, full version? It's behind the&nbsp;<span class="infinity-gate vault-trigger" id="infinity-gate" data-depth-gated role="button" tabindex="0" aria-label="Unlock the full story" hidden>∞</span>&nbsp;— and it's locked.</p>
             </div>
         </div>
     </section>
@@ -159,6 +162,7 @@
     </div>
 </article>
     </section>
+    <div class="vault-output" id="vault-output" hidden></div>
 </main>
 <script defer src="/static/js/index-greeting.js"></script>
 <script defer src="/static/js/about-depth.js"></script>
@@ -177,5 +181,19 @@
                 <a href="mailto:jonatechtv@gmail.com" rel="me">Email</a>
         </p>
     </footer>
+
+    <!-- TownSquare (hosted) — public siteKey only; admin token is NOT stored here -->
+    <link rel="stylesheet" href="https://townsquare.cauenapier.com/widget.css" />
+    <div id="townsquare-root"></div>
+    <script type="module">
+      import { mountTownSquare } from "https://townsquare.cauenapier.com/townsquare.mjs";
+
+      mountTownSquare(document.getElementById("townsquare-root"), {
+        serverOrigin: "https://townsquare.cauenapier.com",
+        siteKey: "site_0ARmB-DkkeGcUMAt",
+        scene: {"benches":4,"benchXs":[0.2,0.72,0.46,0.08],"trees":2,"treeXs":[0.8,0.58],"lamps":1,"lampXs":[0.12],"birds":18},
+        theme: "host"
+      });
+    </script>
 </body>
 </html>

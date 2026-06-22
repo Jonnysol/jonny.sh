@@ -1,10 +1,13 @@
-/* infinity.js — the ∞ gate.
+/* infinity.js — the ∞ / 🔒 vault gate.
  *
- * Shows up only when the About slider is dragged all the way to the back
- * ("I have time..."). Hovering it swaps the cursor for a 🔒. Clicking it glows
- * and asks for a password — which is a riddle. Solve the riddle and the
- * encrypted "full, full, full story" (vault-data.js) is decrypted in-browser
- * and revealed. Get it wrong and nothing leaks.
+ * Triggers: any element with class "vault-trigger".
+ *   - .vault-lock-btn      → a 🔒 button shown at the TOP of the page (always visible)
+ *   - .infinity-gate       → the ∞ that appears only at the deepest About slider level
+ * Clicking any trigger opens a riddle-gated modal. Solve it and the encrypted
+ * "full story" (vault-data.js) is decrypted in-browser and revealed in #vault-output.
+ *
+ * The answer is forgiving: make / build / create / ship + "something people want",
+ * with filler words and punctuation ignored. See candidateKeys().
  *
  * Depends on: VaultCrypto (vault-crypto.js) and VAULT (vault-data.js).
  */
@@ -15,66 +18,93 @@
   }
 
   onReady(function () {
-    var slider = document.getElementById('info-slider');
-    var gate = document.getElementById('infinity-gate');
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('.vault-trigger'));
     var output = document.getElementById('vault-output');
-    if (!gate || typeof VaultCrypto === 'undefined' || typeof VAULT === 'undefined') return;
+    var slider = document.getElementById('info-slider');
+    if (!triggers.length || !output || typeof VaultCrypto === 'undefined' || typeof VAULT === 'undefined') return;
 
     var STORE_KEY = 'jonny.vault.unlocked';
-    var unlocked = false;
-    try { unlocked = localStorage.getItem(STORE_KEY) === '1'; } catch (e) {}
 
-    // ---- floating 🔒 cursor ------------------------------------------------
+    // floating 🔒 cursor — only for the ∞ gate
     var lockCursor = document.createElement('div');
     lockCursor.className = 'vault-lock-cursor';
     lockCursor.textContent = '🔒';
     lockCursor.setAttribute('aria-hidden', 'true');
     document.body.appendChild(lockCursor);
-
-    gate.addEventListener('mouseenter', function () {
-      if (gate.classList.contains('is-opened')) return;
-      lockCursor.classList.add('is-visible');
-    });
-    gate.addEventListener('mouseleave', function () {
-      lockCursor.classList.remove('is-visible');
-    });
     document.addEventListener('mousemove', function (e) {
       if (!lockCursor.classList.contains('is-visible')) return;
       lockCursor.style.left = e.clientX + 'px';
       lockCursor.style.top = e.clientY + 'px';
     });
 
-    // ---- reveal the decrypted story ---------------------------------------
-    function reveal(text, animate) {
+    function isOpened() { return !output.hidden && output.childNodes.length > 0; }
+
+    triggers.forEach(function (t) {
+      if (t.classList.contains('infinity-gate')) {
+        t.addEventListener('mouseenter', function () { if (!isOpened()) lockCursor.classList.add('is-visible'); });
+        t.addEventListener('mouseleave', function () { lockCursor.classList.remove('is-visible'); });
+      }
+      t.addEventListener('click', function () { if (!isOpened()) openModal(); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!isOpened()) openModal(); }
+      });
+    });
+
+    function markOpened() {
+      triggers.forEach(function (t) { t.classList.add('is-opened'); t.classList.remove('is-glowing'); });
       lockCursor.classList.remove('is-visible');
-      gate.classList.add('is-opened');
+    }
+
+    function reveal(text, animate, scroll) {
+      markOpened();
       output.innerHTML = '';
-      var paras = text.split(/\n\s*\n/);
-      paras.forEach(function (p, i) {
+      text.split(/\n\s*\n/).forEach(function (p, i) {
         var el = document.createElement('p');
         el.textContent = p.trim();
-        if (animate) {
-          el.className = 'vault-line';
-          el.style.animationDelay = (i * 0.12) + 's';
-        }
+        if (animate) { el.className = 'vault-line'; el.style.animationDelay = (i * 0.1) + 's'; }
         output.appendChild(el);
       });
       output.hidden = false;
+      if (scroll) { try { output.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
     }
 
-    // We never store the password. On a remembered unlock we re-show the text
-    // we cached for this tab session; if the tab was closed, the gate asks again.
+    // remembered unlock, this tab session only (we never store the answer)
+    var unlocked = false;
+    try { unlocked = localStorage.getItem(STORE_KEY) === '1'; } catch (e) {}
     if (unlocked) {
       var cached = null;
       try { cached = sessionStorage.getItem('jonny.vault.text'); } catch (e) {}
-      if (cached) reveal(cached, false);
+      if (cached) reveal(cached, false, false);
     }
 
-    // ---- the password modal -----------------------------------------------
+    // ---- flexible answer: try several candidate keys from the user's input ----
+    var FILLER = { that: 1, the: 1, a: 1, an: 1, your: 1, their: 1, to: 1, of: 1 };
+    var VERBS = ['make', 'build', 'create', 'ship', 'made', 'built', 'making', 'building'];
+    function candidateKeys(raw) {
+      var s = String(raw).toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+      var words = s.split(' ').filter(function (w) { return w && !FILLER[w]; });
+      var set = {};
+      set[words.join('')] = 1;                 // de-fillered, joined
+      set[VaultCrypto.normalize(raw)] = 1;     // raw normalized (exact)
+      if (words.length) {                      // swap the leading verb for each synonym
+        var rest = words.slice(1).join('');
+        VERBS.forEach(function (v) { set[v + rest] = 1; });
+      }
+      return Object.keys(set).filter(Boolean);
+    }
+    function tryUnlock(raw) {
+      var keys = candidateKeys(raw);
+      for (var i = 0; i < keys.length; i++) {
+        var t = VaultCrypto.decrypt(VAULT.data, keys[i], VAULT.seed);
+        if (t !== null) return t;
+      }
+      return null;
+    }
+
+    // ---- modal -------------------------------------------------------------
     var overlay = null;
     function openModal() {
-      if (gate.classList.contains('is-opened')) return;
-      gate.classList.add('is-glowing');
+      triggers.forEach(function (t) { if (t.classList.contains('infinity-gate')) t.classList.add('is-glowing'); });
       lockCursor.classList.remove('is-visible');
 
       overlay = document.createElement('div');
@@ -105,18 +135,18 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var attempt = VaultCrypto.decrypt(VAULT.data, input.value, VAULT.seed);
-        if (attempt !== null) {
+        var story = tryUnlock(input.value);
+        if (story !== null) {
           try {
             localStorage.setItem(STORE_KEY, '1');
-            sessionStorage.setItem('jonny.vault.text', attempt);
+            sessionStorage.setItem('jonny.vault.text', story);
           } catch (err) {}
           closeModal();
-          reveal(attempt, true);
+          reveal(story, true, true);
         } else {
           errorEl.hidden = false;
           modal.classList.remove('vault-shake');
-          void modal.offsetWidth; // restart animation
+          void modal.offsetWidth;
           modal.classList.add('vault-shake');
           input.select();
         }
@@ -127,9 +157,7 @@
         var h = overlay.querySelector('.vault-hint');
         h.hidden = !h.hidden;
       });
-      overlay.addEventListener('mousedown', function (e) {
-        if (e.target === overlay) closeModal();
-      });
+      overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) closeModal(); });
       document.addEventListener('keydown', escClose);
     }
 
@@ -138,24 +166,15 @@
       overlay.remove();
       overlay = null;
       document.body.classList.remove('vault-modal-open');
-      gate.classList.remove('is-glowing');
+      triggers.forEach(function (t) { t.classList.remove('is-glowing'); });
       document.removeEventListener('keydown', escClose);
     }
     function escClose(e) { if (e.key === 'Escape') closeModal(); }
 
-    gate.addEventListener('click', function () {
-      if (gate.classList.contains('is-opened')) return;
-      openModal();
-    });
-    gate.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
-    });
-
-    // ---- show/hide the gate with the deepest slider level -----------------
+    // ---- depth-gated visibility for the ∞ ---------------------------------
     function syncGate() {
-      if (!slider) { gate.hidden = false; return; }
-      var atMax = Number(slider.value) >= Number(slider.max);
-      gate.hidden = !atMax;
+      var atMax = slider ? Number(slider.value) >= Number(slider.max) : true;
+      triggers.forEach(function (t) { if (t.hasAttribute('data-depth-gated')) t.hidden = !atMax; });
       if (!atMax && overlay) closeModal();
     }
     if (slider) slider.addEventListener('input', syncGate);

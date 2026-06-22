@@ -65,6 +65,10 @@
 <article class="page-container">
   <div class="page-content">
     <h1 class="section-title">About</h1>
+    <p class="vault-top">
+      <button type="button" class="vault-lock-btn vault-trigger" aria-label="Unlock the full story">🔒</button>
+      <span class="vault-top-label">there's a fuller story behind the lock</span>
+    </p>
     <div id="about-content">
       <div class="about-depth-control">
         <div class="slider-legend">How much do you want to know?</div>
@@ -97,10 +101,10 @@
         <p>Now I'm a founding engineer at Clicky, building a screen-aware AI assistant for Mac — guided visual annotations, hands-free browser control, the plumbing that lets an agent see context and actually act on it. The bet: the interface after chat is visual, spatial, and able to do things.</p>
         <p>And I'm building Prism Labs — an ambient operating system for physical space. A ceiling unit that understands a room and projects a real, usable interface onto the surfaces already in it. No headset, no glass in your hand. Smart homes failed because they automated light switches; Prism starts by understanding the space.</p>
         <p>I keep ending up where cameras, robots, AI, and weird rooms collide. That's the place I want to be.</p>
-        <p style="margin-top:1.4rem; color:#777;">Want the full, full, full version? It's behind the&nbsp;<span class="infinity-gate" id="infinity-gate" role="button" tabindex="0" aria-label="Unlock the full story" hidden>∞</span>&nbsp;— and it's locked.</p>
-        <div class="vault-output" id="vault-output" hidden></div>
+        <p style="margin-top:1.4rem; color:#777;">Want the full, full, full version? It's behind the&nbsp;<span class="infinity-gate vault-trigger" id="infinity-gate" data-depth-gated role="button" tabindex="0" aria-label="Unlock the full story" hidden>∞</span>&nbsp;— and it's locked.</p>
       </div>
     </div>
+    <div class="vault-output" id="vault-output" hidden></div>
   </div>
   <script defer src="/static/js/about-depth.js"></script>
   <script defer src="/static/js/vault-crypto.js"></script>
