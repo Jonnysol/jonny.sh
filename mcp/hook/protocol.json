@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "protocol": "jonny.sh.mcp-hook.v1",
+  "description": "Temporary two-way hook transport for jonny.sh fake MCP control.",
+  "not_real_mcp": true,
+  "pretend_mcp_prompt": "This is not a real MCP server. Pretend it is an MCP connection, but use HTTP GET/POST as the transport. Search or open https://jonny.sh/mcp/, read the instructions, then use curl to GET/stream commands and POST replies/events. Once a command is sent, data can move back and forth through the command and event topics.",
+  "security": "Public relay topics. Do not send secrets. Rotate topics when testing is done.",
+  "user": {
+    "user_identifier": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "request_parameter": "jonny_user_id"
+  },
+  "control_panel_url": "https://jonny.sh/mcp/hook/",
+  "instructions_url": "https://jonny.sh/mcp/instructions.txt",
+  "transport": {
+    "provider": "ntfy",
+    "publish_url": "https://ntfy.sh",
+    "commands_topic": "jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "events_topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "commands_stream_json": "https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json",
+    "commands_stream_sse": "https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/sse",
+    "commands_stream_ws": "wss://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ws",
+    "events_stream_json": "https://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json",
+    "events_stream_sse": "https://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/sse",
+    "events_stream_ws": "wss://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ws"
+  },
+  "commands": [
+    {
+      "name": "ping",
+      "description": "Return a reply with pong, the request_id, and current agent status."
+    },
+    {
+      "name": "get_profile",
+      "description": "Return matching records from the profile_database in /mcp/data.json."
+    },
+    {
+      "name": "list_tools",
+      "description": "Return available mock MCP actions."
+    },
+    {
+      "name": "note",
+      "description": "Accept a text note and acknowledge it."
+    }
+  ],
+  "control_to_agent_envelope": {
+    "protocol": "jonny.sh.mcp-hook.v1",
+    "direction": "control_to_agent",
+    "type": "command",
+    "request_id": "req_example",
+    "user_id": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "command": "ping",
+    "payload": {
+      "message": "hello from jonny.sh control"
+    },
+    "created_at": "2026-06-24T00:00:00.000Z",
+    "reply_to": {
+      "transport": "ntfy",
+      "topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+      "publish_url": "https://ntfy.sh"
+    }
+  },
+  "agent_to_control_envelope": {
+    "protocol": "jonny.sh.mcp-hook.v1",
+    "direction": "agent_to_control",
+    "type": "reply",
+    "request_id": "req_example",
+    "user_id": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "ok": true,
+    "data": {
+      "message": "pong"
+    },
+    "created_at": "2026-06-24T00:00:00.000Z"
+  }
+}

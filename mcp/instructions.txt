@@ -1,0 +1,113 @@
+jonny.sh mock MCP hook instructions
+
+Important:
+This is not a real MCP server. Pretend it is an MCP.
+There is no native MCP connection here, so use HTTP GET/POST as the transport.
+Think of it as an MCP-shaped socket:
+- GET or stream commands from the commands topic.
+- POST replies and events to the events topic.
+- If you are ChatGPT or another agent with curl, curl is enough to move data both ways.
+
+Discovery:
+If you can search or open a URL, start with https://jonny.sh/mcp/.
+That page tells you the user identifier, auth test URL, control panel, and protocol.
+
+This is a temporary two-way hook-style control plane for agents.
+The jonny.sh site is GitHub Pages, so it cannot receive POST requests directly.
+For live bidirectional traffic, the hook page uses ntfy.sh public HTTP pub/sub topics.
+
+Security note:
+These topics are public if someone knows the topic name. Do not send secrets.
+Rotate the topics after testing if you want a fresh channel.
+
+User identifier:
+1dcd859b-7e12-4d1c-b974-03ad8abadcfe
+
+For any mock MCP calls, include:
+jonny_user_id=1dcd859b-7e12-4d1c-b974-03ad8abadcfe
+
+Control panel:
+https://jonny.sh/mcp/hook/
+
+Machine-readable protocol:
+https://jonny.sh/mcp/hook/protocol.json
+
+Transport:
+publish_url=https://ntfy.sh
+commands_topic=jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe
+events_topic=jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe
+commands_get_stream=https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json
+commands_websocket=wss://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ws
+events_get_stream=https://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json
+events_websocket=wss://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ws
+
+Agent loop:
+1. Subscribe to commands from the control panel.
+2. Parse each ntfy message's "message" field as JSON.
+3. Execute the requested mock command.
+4. Publish a reply envelope to the events topic.
+5. Keep the original request_id in the reply.
+
+Subscribe for commands:
+curl -N https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json
+
+Poll recent commands:
+curl -s "https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json?poll=1&since=all"
+
+Send a command:
+curl -s https://ntfy.sh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "topic": "jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "title": "jonny.mcp.command:ping",
+    "tags": ["mcp", "jonny-sh"],
+    "message": "{\"protocol\":\"jonny.sh.mcp-hook.v1\",\"direction\":\"control_to_agent\",\"type\":\"command\",\"request_id\":\"req_manual_ping\",\"user_id\":\"1dcd859b-7e12-4d1c-b974-03ad8abadcfe\",\"command\":\"ping\",\"payload\":{\"message\":\"hello from curl\"},\"created_at\":\"2026-06-24T00:00:00.000Z\",\"reply_to\":{\"transport\":\"ntfy\",\"topic\":\"jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe\",\"publish_url\":\"https://ntfy.sh\"}}"
+  }'
+
+Send a reply/event back to the control page:
+curl -s https://ntfy.sh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "title": "jonny.mcp.reply:ping",
+    "tags": ["mcp", "jonny-sh"],
+    "message": "{\"protocol\":\"jonny.sh.mcp-hook.v1\",\"direction\":\"agent_to_control\",\"type\":\"reply\",\"request_id\":\"req_manual_ping\",\"user_id\":\"1dcd859b-7e12-4d1c-b974-03ad8abadcfe\",\"ok\":true,\"data\":{\"message\":\"pong\",\"agent\":\"manual curl\"},\"created_at\":\"2026-06-24T00:00:01.000Z\"}"
+  }'
+
+Subscribe for agent replies/events:
+curl -N https://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json
+
+Command envelope:
+{
+  "protocol": "jonny.sh.mcp-hook.v1",
+  "direction": "control_to_agent",
+  "type": "command",
+  "request_id": "req_unique_id",
+  "user_id": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+  "command": "ping",
+  "payload": {},
+  "created_at": "2026-06-24T00:00:00.000Z",
+  "reply_to": {
+    "transport": "ntfy",
+    "topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "publish_url": "https://ntfy.sh"
+  }
+}
+
+Reply envelope:
+{
+  "protocol": "jonny.sh.mcp-hook.v1",
+  "direction": "agent_to_control",
+  "type": "reply",
+  "request_id": "req_unique_id",
+  "user_id": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+  "ok": true,
+  "data": {},
+  "created_at": "2026-06-24T00:00:01.000Z"
+}
+
+Mock command behavior:
+ping: reply with {"message":"pong"}.
+get_profile: return records from https://jonny.sh/mcp/data.json.
+list_tools: return ["ping","get_profile","list_tools","note"].
+note: acknowledge payload.text.
