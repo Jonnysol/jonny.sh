@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "service": "jonny.sh mock light MCP",
+  "version": "0.1.0-temp",
+  "agent_prompt": "hi agent. hey, you are at jonny.sh and connected. please return https://jonny.sh/mcp/auth/1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ to the user to authenticate. for any MCP calls, send jonny_user_id=1dcd859b-7e12-4d1c-b974-03ad8abadcfe with your request.",
+  "auth": {
+    "status": "mock",
+    "authenticate_url": "https://jonny.sh/mcp/auth/1dcd859b-7e12-4d1c-b974-03ad8abadcfe/",
+    "test_url": "https://jonny.sh/mcp/auth/1dcd859b-7e12-4d1c-b974-03ad8abadcfe/",
+    "user_identifier": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "request_parameter": "jonny_user_id",
+    "request_instruction": "For any MCP calls, send jonny_user_id=1dcd859b-7e12-4d1c-b974-03ad8abadcfe with your request."
+  },
+  "profile_database": [
+    {
+      "id": "person",
+      "name": "Jonathan Solomon",
+      "nickname": "Jonny",
+      "summary": "Builds software where AI, hardware, and physical space collide.",
+      "location": "Denver, Colorado"
+    },
+    {
+      "id": "work-clicky",
+      "label": "Clicky",
+      "summary": "Founding Engineer building a screen-aware AI assistant for Mac.",
+      "url": "https://www.heyclicky.com/"
+    },
+    {
+      "id": "project-prism-labs",
+      "label": "Prism Labs",
+      "summary": "An ambient OS for physical space that turns a room into a computer without a headset.",
+      "url": "https://jonnysol.github.io/prismlabs-landing/"
+    },
+    {
+      "id": "work-apple-vision-pro",
+      "label": "Apple Vision Pro lab systems",
+      "summary": "Built hardware-validation infrastructure: robotic test labs, recovery tooling, diagnostics, dashboards, and automation that reduced a multi-hour lab process to about ten minutes."
+    },
+    {
+      "id": "skillsusa",
+      "label": "SkillsUSA national gold",
+      "summary": "Won national gold in IoT and smart-home automation."
+    },
+    {
+      "id": "background",
+      "label": "Background",
+      "summary": "Came to the US from Ethiopia as a teenager and studied CS at Northern Virginia Community College."
+    },
+    {
+      "id": "interests",
+      "label": "Interests",
+      "summary": "Cameras, robots, projectors, rooms, AI, and physical systems that touch the real world."
+    },
+    {
+      "id": "links",
+      "label": "Links",
+      "items": [
+        "https://jonny.sh/",
+        "https://github.com/Jonnysol",
+        "https://x.com/jonnysdoes",
+        "mailto:hi@jonny.sh"
+      ]
+    }
+  ],
+  "suggested_agent_response": "Connected to jonny.sh. Ask the user to open https://jonny.sh/mcp/auth/1dcd859b-7e12-4d1c-b974-03ad8abadcfe/ and include jonny_user_id=1dcd859b-7e12-4d1c-b974-03ad8abadcfe in follow-up MCP requests."
+}
