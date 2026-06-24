@@ -1,0 +1,152 @@
+{
+  "ok": true,
+  "not_real_mcp": true,
+  "message_for_agents": "This is not a native MCP server, but it exposes MCP-shaped tools over HTTP GET/POST. Do not report zero tools. If the user asks to use note or write a note, call note.write by POSTing the hook envelope with curl.",
+  "tool_count": 4,
+  "user_identifier": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+  "request_parameter": "jonny_user_id",
+  "transport": {
+    "type": "http-hook",
+    "publish_url": "https://ntfy.sh",
+    "commands_topic": "jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "events_topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+    "commands_get_stream": "https://ntfy.sh/jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json",
+    "events_get_stream": "https://ntfy.sh/jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe/json"
+  },
+  "tools": [
+    {
+      "name": "note.write",
+      "aliases": ["note", "write_note"],
+      "description": "Write a note into the jonny.sh fake MCP hook.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The note text to write."
+          }
+        },
+        "required": ["text"]
+      },
+      "call": {
+        "method": "POST",
+        "url": "https://ntfy.sh",
+        "command": "note.write",
+        "topic": "jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+        "envelope": {
+          "protocol": "jonny.sh.mcp-hook.v1",
+          "direction": "control_to_agent",
+          "type": "command",
+          "request_id": "req_unique_id",
+          "user_id": "1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+          "command": "note.write",
+          "payload": {
+            "text": "I am a banana."
+          },
+          "created_at": "2026-06-24T00:00:00.000Z",
+          "reply_to": {
+            "transport": "ntfy",
+            "topic": "jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe",
+            "publish_url": "https://ntfy.sh"
+          }
+        }
+      },
+      "curl_example": "curl -s https://ntfy.sh -H 'Content-Type: application/json' -d '{\"topic\":\"jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe\",\"title\":\"jonny.mcp.command:note.write\",\"tags\":[\"mcp\",\"jonny-sh\"],\"message\":\"{\\\"protocol\\\":\\\"jonny.sh.mcp-hook.v1\\\",\\\"direction\\\":\\\"control_to_agent\\\",\\\"type\\\":\\\"command\\\",\\\"request_id\\\":\\\"req_note_write_manual\\\",\\\"user_id\\\":\\\"1dcd859b-7e12-4d1c-b974-03ad8abadcfe\\\",\\\"command\\\":\\\"note.write\\\",\\\"payload\\\":{\\\"text\\\":\\\"I am a banana.\\\"},\\\"created_at\\\":\\\"2026-06-24T00:00:00.000Z\\\",\\\"reply_to\\\":{\\\"transport\\\":\\\"ntfy\\\",\\\"topic\\\":\\\"jonny-sh-mcp-events-1dcd859b-7e12-4d1c-b974-03ad8abadcfe\\\",\\\"publish_url\\\":\\\"https://ntfy.sh\\\"}}\"}'"
+    },
+    {
+      "name": "profile.get",
+      "description": "Read Jonny profile context from the fake MCP.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "call": {
+        "method": "GET",
+        "url": "https://jonny.sh/mcp/data.json"
+      }
+    },
+    {
+      "name": "tools.list",
+      "description": "List fake MCP tools exposed by jonny.sh.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "call": {
+        "method": "GET",
+        "url": "https://jonny.sh/mcp/tools/list.json"
+      }
+    },
+    {
+      "name": "ping",
+      "description": "Test the fake MCP hook transport.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "call": {
+        "method": "POST",
+        "url": "https://ntfy.sh",
+        "command": "ping",
+        "topic": "jonny-sh-mcp-control-1dcd859b-7e12-4d1c-b974-03ad8abadcfe"
+      }
+    }
+  ],
+  "jsonrpc_style_tools_list_result": {
+    "jsonrpc": "2.0",
+    "id": "tools-list",
+    "result": {
+      "tools": [
+        {
+          "name": "note.write",
+          "description": "Write a note into the jonny.sh fake MCP hook.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" }
+            },
+            "required": ["text"]
+          }
+        },
+        {
+          "name": "profile.get",
+          "description": "Read Jonny profile context.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "fields": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        {
+          "name": "tools.list",
+          "description": "List fake MCP tools.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        {
+          "name": "ping",
+          "description": "Test the fake MCP transport.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "message": { "type": "string" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

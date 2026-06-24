@@ -11,6 +11,7 @@
   },
   "control_panel_url": "https://jonny.sh/mcp/hook/",
   "instructions_url": "https://jonny.sh/mcp/instructions.txt",
+  "tool_registry_url": "https://jonny.sh/mcp/tools/list.json",
   "transport": {
     "provider": "ntfy",
     "publish_url": "https://ntfy.sh",
@@ -29,16 +30,17 @@
       "description": "Return a reply with pong, the request_id, and current agent status."
     },
     {
-      "name": "get_profile",
+      "name": "profile.get",
       "description": "Return matching records from the profile_database in /mcp/data.json."
     },
     {
-      "name": "list_tools",
+      "name": "tools.list",
       "description": "Return available mock MCP actions."
     },
     {
-      "name": "note",
-      "description": "Accept a text note and acknowledge it."
+      "name": "note.write",
+      "aliases": ["note"],
+      "description": "Accept a text note and acknowledge it. Use this when the user says to use note or write a note."
     }
   ],
   "control_to_agent_envelope": {

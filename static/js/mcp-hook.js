@@ -185,11 +185,11 @@
             ping: {
                 message: "hello from jonny.sh control"
             },
-            get_profile: {
+            "profile.get": {
                 fields: ["person", "work-clicky", "project-prism-labs", "links"]
             },
-            list_tools: {},
-            note: {
+            "tools.list": {},
+            "note.write": {
                 text: "remember this came through the jonny.sh hook"
             }
         };
